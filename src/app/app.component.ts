@@ -1,14 +1,15 @@
+// src/app/app.component.ts
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { RouterModule } from '@angular/router';
+import { LoginComponent } from './components/login/login.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet,LoginComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [RouterModule]
 })
 export class AppComponent {
-  title = 'BRANCHEE-FRONTEND';
+  title = 'my-app';
 }
