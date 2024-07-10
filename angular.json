@@ -57,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "BRANCHEE-FRONTEND:build:production"
+              "buildTarget": "BRANCHEE-FRONTEND:build:production"
             },
             "development": {
-              "browserTarget": "BRANCHEE-FRONTEND:build:development"
+              "buildTarget": "BRANCHEE-FRONTEND:build:development"
             }
           },
           "defaultConfiguration": "development"
