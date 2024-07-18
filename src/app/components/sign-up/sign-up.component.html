@@ -11,21 +11,22 @@
         <div class="wrapper">
           <form>
             <h1>Create</h1>  
+            <!--USERNAME-->
             <div class="input-box">
               <input type="text"  class="form-control" id="username" class="username" name="username" placeholder="Username" [(ngModel)]="user.username" required>
               <i class="bi bi-person-fill"></i>
             </div>
-              
+            <!--EMAIL-->  
             <div class="input-box">
               <input type="text" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="user.email"  required>
               <i class="bi bi-envelope-fill"></i>
             </div>
-              
+            <!--PASSWORD-->  
             <div class="input-box">
               <input type="password" class="form-control" id="password" name="password" placeholder="Password" [(ngModel)]="user.password" required>
               <i class="bi bi-lock-fill"></i>
             </div>
-              
+            <!-- SIGN UP-->
             <button type="submit" class="btn" (click)="signUp()">Create Account</button>
           </form>
         </div>

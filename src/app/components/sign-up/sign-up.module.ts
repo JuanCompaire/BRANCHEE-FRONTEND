@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { SignUpComponent } from './sign-up.component';
+import { DataService } from '../../service/data.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -9,10 +11,12 @@ import { SignUpComponent } from './sign-up.component';
   ],
   imports: [
     CommonModule,
-    FormsModule  // Añade FormsModule aquí
+    FormsModule,
+    HttpClientModule // Añade FormsModule aquí
   ],
   exports: [
     SignUpComponent  // Exporta el componente si es necesario usarlo en otros módulos
-  ]
+  ],
+  providers: [DataService]
 })
 export class SignUpModule { }
