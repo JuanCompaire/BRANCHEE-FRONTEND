@@ -1,11 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Usuario } from '../../model/Usuario';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { DataService } from '../../service/data.service';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,7 +17,13 @@ export class SignUpComponent {
   constructor() {}
 
   // Method to create a user and register
-  signUp() {
+  signUp(form: any) {
+    if (form.invalid) {
+      // Handle the case where the form is invalid
+      console.error('El formulario es inválido');
+      return;
+    }
+
     // Save all user data in "data"
     const data = this.user;
 

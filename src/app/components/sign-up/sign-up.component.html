@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BREANCHEE</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="wrapper">
-          <form>
-            <h1>Create</h1>  
-            <!--USERNAME-->
-            <div class="input-box">
-              <input type="text"  class="form-control" id="username" class="username" name="username" placeholder="Username" [(ngModel)]="user.username" required>
-              <i class="bi bi-person-fill"></i>
-            </div>
-            <!--EMAIL-->  
-            <div class="input-box">
-              <input type="text" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="user.email"  required>
-              <i class="bi bi-envelope-fill"></i>
-            </div>
-            <!--PASSWORD-->  
-            <div class="input-box">
-              <input type="password" class="form-control" id="password" name="password" placeholder="Password" [(ngModel)]="user.password" required>
-              <i class="bi bi-lock-fill"></i>
-            </div>
-            <!-- SIGN UP-->
-            <button type="submit" class="btn" (click)="signUp()">Create Account</button>
-          </form>
+</head>
+<body>
+    <div class="wrapper">
+      <form #userForm="ngForm" (ngSubmit)="signUp(userForm)">
+        <h1>Create</h1>  
+        <!--USERNAME-->
+        <div class="input-box">
+          <input type="text" class="form-control" id="username" name="username" placeholder="Username" [(ngModel)]="user.username" required #username="ngModel">
+          <i class="bi bi-person-fill"></i>
+          <div *ngIf="username.invalid && (username.dirty || username.touched)">
+            <div *ngIf="username.errors?.['required']">El nombre de usuario es obligatorio.</div>
+          </div>
         </div>
-    </body>
+        <!--EMAIL-->  
+        <div class="input-box">
+          <input type="email" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="user.email" required email #email="ngModel">
+          <i class="bi bi-envelope-fill"></i>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors?.['required']">El correo electrónico es obligatorio.</div>
+            <div *ngIf="email.errors?.['email']"><p class="emailNotValid">Email no valido</p></div>
+          </div>
+        </div>
+        <!--PASSWORD-->  
+        <div class="input-box">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" [(ngModel)]="user.password" required #password="ngModel">
+          <i class="bi bi-lock-fill"></i>
+          <div *ngIf="password.invalid && (password.dirty || password.touched)">
+            <div *ngIf="password.errors?.['required']">La contraseña es obligatoria.</div>
+          </div>
+        </div>
+        <!-- SIGN UP-->
+        <button type="submit" class="btn" [disabled]="userForm.invalid">Create Account</button>
+      </form>
+    </div>
+</body>
 </html>
