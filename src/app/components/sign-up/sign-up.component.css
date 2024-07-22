@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 body{
@@ -10,7 +10,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../../../assets/branchee.jpg') no-repeat;
+    background: url('../../../assets/wallpaper.jpg') no-repeat;
     background-size: cover;
     background-position: center; 
 }

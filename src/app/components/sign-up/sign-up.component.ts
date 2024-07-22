@@ -32,7 +32,7 @@ export class SignUpComponent {
       next: (response) => {
         // Successfully registered, redirect to main page
         console.log("Respuesta del servidor:", response);
-        this.router.navigateByUrl('main');
+        this.router.navigateByUrl('login');
       },
       error: (error) => {
         // Handle any type of error
