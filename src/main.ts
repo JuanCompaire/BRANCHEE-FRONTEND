@@ -10,7 +10,6 @@ import { SignUpModule } from './app/components/sign-up/sign-up.module';
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(BrowserModule),
-    importProvidersFrom(SignUpModule),
     provideRouter(routes)
   ]
 }).catch(err => console.error(err));

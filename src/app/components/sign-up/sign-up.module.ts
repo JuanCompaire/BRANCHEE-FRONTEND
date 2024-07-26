@@ -12,7 +12,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule // Añade FormsModule aquí
+    HttpClientModule
   ],
   exports: [
     SignUpComponent  // Exporta el componente si es necesario usarlo en otros módulos

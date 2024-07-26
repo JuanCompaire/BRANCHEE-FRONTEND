@@ -11,5 +11,5 @@ import { LoginComponent } from './components/login/login.component';
   imports: [RouterModule]
 })
 export class AppComponent {
-  title = 'my-app';
+
 }

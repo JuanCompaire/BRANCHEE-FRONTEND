@@ -23,18 +23,16 @@ export class SignUpComponent {
       console.error('El formulario es inválido');
       return;
     }
-
     // Save all user data in "data"
     const data = this.user;
-
     // Show the user data in console
     console.log(this.user);
-
+    // call for signUp method from the service, which will conect to backend
     this.service.signUp(data).subscribe({
       next: (response) => {
         // Successfully registered, redirect to main page
         console.log("Respuesta del servidor:", response);
-        this.router.navigateByUrl('main');
+        this.router.navigateByUrl('login');
       },
       error: (error) => {
         // Handle any type of error
