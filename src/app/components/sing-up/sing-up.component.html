@@ -9,17 +9,17 @@
 </head>
 <body>
     <div class="wrapper">
-      <form #userForm="ngForm" (ngSubmit)="signUp(userForm)">
-        <h1>Create</h1>  
+      <form #userForm="ngForm" (ngSubmit)="signUpUser(userForm)">
+        <h1>Create</h1>
         <!--USERNAME-->
         <div class="input-box">
           <input type="text" class="form-control" id="username" name="username" placeholder="Username" [(ngModel)]="user.username" required #username="ngModel">
           <i class="bi bi-person-fill"></i>
           <div *ngIf="username.invalid && (username.dirty || username.touched)">
-            <div *ngIf="username.errors?.['required']">El nombre de usuario es obligatorio.</div>
+            <div *ngIf="username.errors?.['required']"><p class="userNotValid">El nombre de usuario es obligatorio.</p></div>
           </div>
         </div>
-        <!--EMAIL-->  
+        <!--EMAIL-->
         <div class="input-box">
           <input type="email" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="user.email" required email #email="ngModel">
           <i class="bi bi-envelope-fill"></i>
@@ -28,12 +28,12 @@
             <div *ngIf="email.errors?.['email']"><p class="emailNotValid">Email no valido</p></div>
           </div>
         </div>
-        <!--PASSWORD-->  
+        <!--PASSWORD-->
         <div class="input-box">
           <input type="password" class="form-control" id="password" name="password" placeholder="Password" [(ngModel)]="user.password" required #password="ngModel">
           <i class="bi bi-lock-fill"></i>
           <div *ngIf="password.invalid && (password.dirty || password.touched)">
-            <div *ngIf="password.errors?.['required']">La contraseña es obligatoria.</div>
+            <div *ngIf="password.errors?.['required']"><p class="passwordNotValid">La contraseña es obligatoria.</p></div>
           </div>
         </div>
         <!-- SIGN UP-->

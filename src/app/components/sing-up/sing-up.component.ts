@@ -1,23 +1,21 @@
 import { Component, inject } from '@angular/core';
-import { Usuario } from '../../model/Usuario';
-import { DataService } from '../../service/data.service';
 import { Router } from '@angular/router';
+import { Usuario } from '../../models/Usuario';
+import { DataService } from '../../service/data.service';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  selector: 'app-sing-up',
+  templateUrl: './sing-up.component.html',
+  styleUrl: './sing-up.component.css'
 })
-export class SignUpComponent {
-  // User to be registered
-  user: Usuario = new Usuario();
+export class SingUpComponent {
+
+  user = new Usuario()
   service = inject(DataService);
-  router = inject(Router);
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  // Method to create a user and register
-  signUp(form: any) {
+  signUpUser(form: any){
     if (form.invalid) {
       // Handle the case where the form is invalid
       console.error('El formulario es inválido');
@@ -39,5 +37,8 @@ export class SignUpComponent {
         console.error('Error al enviar datos:', error);
       }
     });
+
   }
+
+
 }

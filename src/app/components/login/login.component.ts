@@ -1,6 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { Usuario } from '../../model/Usuario';
-import { DataService } from '../../service/data.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,11 +8,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  // User to login the page
-  user: Usuario = new Usuario();
-  service = inject(DataService);
-  router = inject(Router);
+  constructor(private router: Router) {}
 
-  constructor() {}
+  toRegisterPage(): void{
+    this.router.navigate(['/sign-up']);
+    console.log("Redirect to Register Page");
+  }
 
 }

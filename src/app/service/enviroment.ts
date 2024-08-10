@@ -1,4 +1,4 @@
 export const environment = {
-//url backend
-url:"http://localhost:8080/"
-}
+  //url backend
+  url:"http://localhost:8080/"
+  }

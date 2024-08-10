@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 body{
@@ -114,3 +114,15 @@ body{
 .register-link p a:hover {
   text-decoration: underline;
 }
+.emailNotValid{
+  color:red;
+}
+
+.passwordNotValid{
+  color:red;
+}
+
+.userNotValid{
+  color:red;
+}
+
