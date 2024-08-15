@@ -20,6 +20,6 @@ export class DataService {
     }
   //Login Method(check if the user exists)
     login(data:Record<string,any>): Observable<any>{
-      return this.http.post<any>(this.url+"login",data);
+      return this.http.post(this.url+"login", data);
     }
 }

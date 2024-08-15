@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { SingUpComponent } from './components/sing-up/sing-up.component';
 import { LoginComponent } from './components/login/login.component';
 import { DataService } from './service/data.service';
+import { MainPageComponent } from './components/main-page/main-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SingUpComponent,
-    LoginComponent
+    LoginComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
