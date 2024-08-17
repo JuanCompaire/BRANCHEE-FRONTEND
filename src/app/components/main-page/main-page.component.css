@@ -1,0 +1,14 @@
+body{
+  cursor: url('../../../assets/cursor.png'), auto;
+}
+.container{
+  background-color: black;
+}
+.user-bar{
+}
+.user-box{
+  background-color:  rgb(124, 132, 139);
+}
+.person-icon{
+
+}
