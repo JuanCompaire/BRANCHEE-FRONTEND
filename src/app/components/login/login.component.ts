@@ -16,26 +16,25 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   login(): void {
-    // Imprimir los datos que se enviarán al backend
     console.log("Datos a enviar al backend:", this.user);
 
-    // Enviar datos al backend
     this.service.login(this.user).subscribe({
       next: (response) => {
-        // Manejo exitoso de la respuesta
         console.log("Respuesta del servidor:", response);
 
-        // Verificar si el mensaje de respuesta es 'Login exitoso'
-        if (response.message === 'Login exitoso') {
+        if (response.token) {
+          // Almacena el token y redirige al usuario
+          this.service.setToken(response.token);
+          console.log("Token almacenado en localStorage:", localStorage.getItem('authToken'));
           this.router.navigateByUrl('main-page');
-        } else {
-          // Mostrar mensaje de error cuando el login falla
-          console.error('Error en el login:', response.message);
+          console.log("Token set y login correcto");
+      } else {
+          console.error('Error en el login:', response.message || 'Token no recibido');
           alert('Usuario o contraseña incorrectos');
-        }
+      }
+
       },
       error: (error) => {
-        // Manejo del error
         console.error('Error al enviar datos:', error);
         alert('Error en el login. Por favor, inténtelo de nuevo.');
       }
