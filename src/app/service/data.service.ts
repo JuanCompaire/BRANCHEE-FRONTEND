@@ -15,11 +15,11 @@ export class DataService {
 
     constructor() { }
   //send the user data to the backend for the signup
-    signUp(data: Record<string, any>): Observable<any>{
-      return this.http.post<any>(this.url+"signup",data);
+    signUp(data: Record<string, any>): Observable<any> {
+      return this.http.post<any>(`${this.url}api/auth/signUp`, data);
     }
   //Login Method(check if the user exists)
-    login(data:Record<string,any>): Observable<any>{
-      return this.http.post(this.url+"login", data);
+    login(data: Record<string, any>): Observable<any> {
+      return this.http.post<any>(`${this.url}api/auth/login`, data);
     }
 }
