@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from '../../models/Usuario';
 import { DataService } from '../../service/data.service';
@@ -8,12 +8,26 @@ import { DataService } from '../../service/data.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   user = new Usuario();
   service = inject(DataService);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,) {}
+
+  ngOnInit(): void {
+    // Obtener el usuario actual
+    this.service.getCurrentUser().subscribe(user => {
+      if (user != null){
+        this.user = user;
+      console.log("Usuario Sesión: ", user.username);
+      }
+      //esto es lo que tendria que pasar, ya que si esta en login, no hay ningun usuario en la sesion
+      else{
+        console.log("El usario es nulo, no hay sesion de ningun usuario, se ha hecho el LOG OUT bien")
+      }
+    });
+  }
 
   login(): void {
     console.log("Datos a enviar al backend:", this.user);
