@@ -69,11 +69,10 @@ export class CreateProyectComponent implements OnInit {
     this.proyect.id_boss = this.user.id;
     this.proyect.date_create = format(new Date(), 'dd-MM-yyyy');
 
-    // Asignar solo los IDs a la propiedad usuarios
-    this.proyect.usuarios = this.selectedUserIds;
 
     console.log("Datos a enviar al backend, del proyecto:", this.proyect);
-    this.service.createProyect(this.proyect).subscribe({
+    console.log("Datos a enviar al backend, de los usuarios:", this.selectedUserIds);
+    this.service.createProyect(this.proyect,this.selectedUserIds).subscribe({
       next: (response) => {
         // Successfully registered, redirect to main page
         console.log("Respuesta del servidor:", response);
