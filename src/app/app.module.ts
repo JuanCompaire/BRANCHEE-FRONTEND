@@ -8,12 +8,17 @@ import { AppComponent } from './app.component';
 import { SingUpComponent } from './components/sing-up/sing-up.component';
 import { LoginComponent } from './components/login/login.component';
 import { DataService } from './service/data.service';
+import { MainPageComponent } from './components/main-page/main-page.component';
+import { CreateProyectComponent } from './components/create-proyect/create-proyect.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
     AppComponent,
     SingUpComponent,
-    LoginComponent
+    LoginComponent,
+    MainPageComponent,
+    CreateProyectComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +26,7 @@ import { DataService } from './service/data.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [DataService],
+  providers: [DataService, provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

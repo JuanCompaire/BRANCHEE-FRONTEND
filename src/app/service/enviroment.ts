@@ -1,4 +1,4 @@
 export const environment = {
-  //url backend
-  url:"http://localhost:8080/"
-  }
+  production: false,
+  url: 'http://localhost:8080/'  // Asegúrate de incluir el protocolo
+};
