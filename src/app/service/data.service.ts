@@ -60,6 +60,12 @@ export class DataService {
     return this.http.get<Usuario[]>(`${this.url}api/auth/getUsers`);
   }
 
+  getUsersByString(searchString : string): Observable<Usuario[]>{
+    console.log("El string que se envia para la lista de usuarios es : ",searchString);
+    return this.http.get<Usuario[]>(`${this.url}api/auth/getUsersByString`, { params: { string: searchString } });
+
+  }
+
   // Método para cerrar sesión
   logout(): void {
     this.token = null;
