@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../service/data.service';
+import { DataService } from '../../../service/data.service';
 import { Router } from '@angular/router';
-import { Usuario } from '../../models/Usuario';
-import { Proyecto } from '../../models/Proyecto';
+import { Usuario } from '../../../models/Usuario';
+import { Proyecto } from '../../../models/Proyecto';
 import { format } from 'date-fns';
 
 @Component({

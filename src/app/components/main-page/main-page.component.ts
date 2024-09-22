@@ -3,6 +3,8 @@ import { Usuario } from '../../models/Usuario';
 import { DataService } from '../../service/data.service';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../service/excel.service';
+import { Proyecto } from '../../models/Proyecto';
+import { switchMap } from 'rxjs';
 
 
 @Component({
@@ -13,7 +15,8 @@ import { ExcelService } from '../../service/excel.service';
 export class MainPageComponent implements OnInit {
 
   user = new Usuario();
-  userListGet: Usuario[] = [];
+  proyectList: Proyecto[] = [];
+  showProjects : boolean = false;
 
   constructor(
     private service: DataService, // Usa inyección a través del constructor
@@ -22,27 +25,24 @@ export class MainPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener el usuario actual
-    this.service.getCurrentUser().subscribe(user => {
-      this.user = user;
-      console.log("Usuario Sesión: ", user.username);
-    });
-
-    // Obtener la lista de usuarios
-    this.service.getUsers().subscribe({
-      next: (users: Usuario[]) => {
-        this.userListGet = users;
-        console.log("Lista de usuarios: ", this.userListGet);
+    // Obtener el usuario actual y luego los proyectos a los que pertenece
+    this.service.getCurrentUser().pipe(
+      // Una vez que obtienes el usuario, utiliza switchMap para encadenar la llamada a getProyectosByUserId
+      switchMap(user => {
+        this.user = user;  // Asigna el usuario a this.user
+        console.log("Usuario Sesión: ", user);
+        // Llama al servicio para obtener los proyectos usando el ID del usuario
+        return this.service.getProyectosByUserId(user.id);
+      })
+    ).subscribe({
+      next: (proyects: Proyecto[]) => {
+        this.proyectList = proyects;  // Asigna los proyectos a this.proyectList
+        console.log("Lista de proyectos: ", this.proyectList);
       },
       error: (error) => {
-        console.error('Error al obtener usuarios:', error);
+        console.error('Error al obtener los proyectos:', error);
       }
     });
-  }
-
-  exportExcel(): void{
-    console.log("Making the Excel");
-    this.excelService.exportAsExcelFile(this.userListGet,"");
   }
 
   logOut(): void{
@@ -54,5 +54,10 @@ export class MainPageComponent implements OnInit {
   toCreateProyect(): void{
     console.log("REDIRECT TO CREATE PROYECT PAGE");
     this.router.navigateByUrl('create-proyect');
+  }
+
+  toProyectDetailsPage(id?: number): void{
+    this.router.navigate(['/details-proyect', id]);
+
   }
 }

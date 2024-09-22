@@ -371,6 +371,7 @@ body {
 	font-size: 24px;
 	font-weight: 600;
 	color: #342E37;
+  margin-left: 10px;
 }
 #content main .box-info li .text p {
 	color: #342E37;
@@ -557,6 +558,9 @@ body {
   transform: rotate(90deg); /* Rotar el ícono al hacer hover */
 }
 
+.proyect{
+  border: 1px solid #342E37;
+}
 
 
 /* Define la animación "tada" en CSS */
@@ -565,3 +569,4 @@ body {
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
+
