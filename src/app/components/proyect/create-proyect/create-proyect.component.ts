@@ -34,7 +34,7 @@ export class CreateProyectComponent implements OnInit {
   searchUser(event: any): void {
     const searchString = event.target.value;
 
-    if (searchString.length > 0) {
+    if (searchString.length != '') {
       this.service.getUsersByString(searchString).subscribe(
         (users: Usuario[]) => {
           this.userList = users;
@@ -45,18 +45,17 @@ export class CreateProyectComponent implements OnInit {
           console.error('Error fetching users:', error);
         }
       );
-    } /*else {
-      this.userList = []; // Limpiar la lista si el campo está vacío
     }
-      */
   }
 
-  addUser(user: Usuario): void {
+  addUser(user: Usuario, userSearch: HTMLInputElement): void {
     // Evitar duplicados
     if (!this.selectedUserIds.some(selectedUser => selectedUser.id === user.id)) {
       this.selectedUserIds.push(user);
     }
     this.userList = [];  // Limpiar la lista de sugerencias después de agregar un usuario
+
+    userSearch.value = '';
   }
 
   removeUser(userId: number): void {

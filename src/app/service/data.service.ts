@@ -32,6 +32,14 @@ export class DataService {
     return this.http.post<any>(`${this.url}api/proyect/create`,requestBody);
   }
 
+  editProyect(proyecto: Record<string, any>, selectedUserIds: number[]): Observable<any>{
+    const requestBody = {
+      proyecto : proyecto,
+      selectedUserIds : selectedUserIds
+    };
+    return this.http.post<any>(`${this.url}api/proyect/edit`,requestBody);
+  }
+
   // Método para guardar el token de sesión
   setToken(token: string): void {
     this.token = token;

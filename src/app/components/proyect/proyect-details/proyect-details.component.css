@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-  cursor: url('../../../../assets/cursor.png'), auto;
 }
 
 body{
@@ -18,7 +17,7 @@ body{
 }
 
 .wrapper {
-  width:auto;
+  width: 600px;;
   height: auto;
   background: transparent;
   border: 2px solid rgba(255,255,255, .2);
@@ -124,3 +123,32 @@ body{
 	border-radius: 50%;
 }
 
+.users-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se muevan a la siguiente línea cuando no hay más espacio */
+  gap: 15px; /* Espacio entre los elementos */
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+}
+
+.user-bubble {
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1; /* Color de fondo para los elementos de usuario */
+  padding: 5px 10px; /* Espaciado interno */
+  border-radius: 20px; /* Bordes redondeados */
+}
+
+.user-icon {
+  width: 30px; /* Tamaño del icono */
+  height: 30px; /* Tamaño del icono */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+
+.user-info {
+  margin-right: 10px; /* Espacio entre el texto y el icono de eliminar */
+  color:rgb(80, 109, 236);
+}
