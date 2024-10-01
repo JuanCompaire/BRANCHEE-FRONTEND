@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BRANCHEE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    .dropdown-menu.show {
+      display: block;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <form>
+      <h1>PROYECT DETAILS</h1>
+
+      <div >
+        <div class="row">
+          <div class="col-6">
+            <!--name-->
+            <label for="basic-url" class="form-label">Proyect Name<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
+            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="name" [value]="proyect_details.name" readonly>
+          </div>
+          <div class="col-6">
+            <!--proyect id-->
+            <label for="basic-url" class="form-label">Proyect Id<i class="bi bi-journal-code" style="margin-left: 5px;"></i></label>
+            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="date_create" [value]="proyect_details.id" readonly>
+          </div>
+          <br>
+          <div class="col-6">
+            <!--boss-->
+            <label for="basic-url" class="form-label">Proyect Boss<i class="bi bi-person-gear" style="margin-left: 5px;"></i></label>
+            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="name" [value]="user_boss.username" readonly>
+          </div>
+          <div class="col-6">
+            <!--date_create-->
+            <label for="basic-url" class="form-label">Created Date<i class="bi bi-calendar3" style="margin-left: 5px;"></i></label>
+            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="date_create" [value]="proyect_details.date_create" readonly>
+          </div>
+          <div class="col-12" *ngIf="userIsBoss">
+            <!--user list-->
+            <div class="position-relative">
+              <input type="text" #userSearch class="form-control" placeholder="Search user" aria-label="Select user" (keyup)="searchUser($event)" required>
+              <ul class="dropdown-menu w-100" [class.show]="user_list.length > 0">
+                <li *ngFor="let user of user_list">
+                  <a class="dropdown-item" (click)="addUser(user,userSearch)">{{ user.username }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <label for="basic-url" class="form-label">Users List<i style="margin-left: 5px;"></i></label>
+          <div class="users-container">
+            <div class="user-item"*ngFor="let user of selectedUserIds"[class.show]="selectedUserIds.length > 0">
+                <div class="user-bubble">
+                  <img src="assets/user_icon.webp"alt="User Icon" class="user-icon">
+                  <p class="user-info">{{ user.username }}</p>
+                  <i class="bi bi-trash3-fill text-danger" (click)="removeUser(user.id)" *ngIf="userIsBoss"style="cursor: pointer;"></i>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--BUTTONS-->
+      <div class="row">
+        <!--CUANDO userIsBoss ES FALSO (Save y Back ocupan la mitad cada uno)-->
+        <div *ngIf="!userIsBoss" class="input-box col-12 d-flex justify-content-between">
+          <!--SAVE-->
+          <button type="submit" class="btn btn-primary w-50 me-2" (click)="editProyect()">Save</button>
+          <!--BACK-->
+          <button type="button" class="btn btn-secondary w-50 ms-2" (click)="goBack()">Back</button>
+        </div>
+
+        <!--CUANDO userIsBoss ES TRUE (Save ocupa toda la horizontal, Delete y Back ocupan la mitad)-->
+        <div *ngIf="userIsBoss" class="input-box col-12">
+          <!--SAVE ocupa toda la horizontal-->
+          <button type="submit" class="btn btn-primary w-100 mb-2" (click)="editProyect()">Save</button>
+
+          <!--DELETE y BACK ocupan la mitad de la horizontal-->
+          <div class="d-flex justify-content-between">
+            <!--DELETE-->
+            <button type="submit" class="btn w-50 me-2 bi bi-trash3-fill" style="background-color: rgb(57, 1, 1); color:wheat">Delete</button>
+            <!--BACK-->
+            <button type="button" class="btn btn-secondary w-50 ms-2" (click)="goBack()">Back</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

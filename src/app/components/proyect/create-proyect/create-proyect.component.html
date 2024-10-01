@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BRANCHEE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    .dropdown-menu.show {
+      display: block;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Div for Background -->
+  <div class="bg text-center ">
+    <!-- Formulario con validaciones -->
+    <form #form="ngForm" (ngSubmit)="createProyect()" class="centered">
+      <p class="firstLine">C &nbsp; R &nbsp; E &nbsp; A &nbsp; T &nbsp; E &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; P &nbsp; R &nbsp; O &nbsp; Y &nbsp; E &nbsp; C &nbsp; T</p>
+      <br>
+      <!-- Input para el nombre del proyecto -->
+      <input type="text" class="form-control" placeholder="PROYECT NAME" [(ngModel)]="proyect.name" name="proyectName" required #proyectName="ngModel">
+      <!-- Mensaje de error si no es válido -->
+      <div *ngIf="proyectName.invalid && proyectName.touched" class="text-danger">
+        Project name is required.
+      </div>
+      <br>
+      <div class="position-relative">
+        <input type="text" #userSearch class="form-control" placeholder="Search user" aria-label="Select user" (keyup)="searchUser($event)" [disabled]="isDisabled" required>
+        <ul class="dropdown-menu w-100" [class.show]="userList.length > 0">
+          <li *ngFor="let user of userList">
+            <a class="dropdown-item" (click)="addUser(user,userSearch)">{{ user.username }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="users-container">
+        <div *ngFor="let user of selectedUserIds" [class.show]="selectedUserIds.length > 0">
+          <div class="user-bubble">
+            <img src="assets/user_icon.webp"alt="User Icon" class="user-icon">
+            <p class="user-info">{{ user.username }}</p>
+            <i class="bi bi-trash text-danger" (click)="removeUser(user.id)" style="cursor: pointer;"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón deshabilitado si el formulario no es válido -->
+      <button type="submit" class="btn" [disabled]="form.invalid">Create</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ import { environment } from './enviroment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Usuario } from '../models/Usuario';
+import { Proyecto } from '../models/Proyecto';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class DataService {
       selectedUserIds : selectedUserIds
     };
     return this.http.post<any>(`${this.url}api/proyect/create`,requestBody);
+  }
+
+  editProyect(proyecto: Record<string, any>, selectedUserIds: number[]): Observable<any>{
+    const requestBody = {
+      proyecto : proyecto,
+      selectedUserIds : selectedUserIds
+    };
+    return this.http.post<any>(`${this.url}api/proyect/edit`,requestBody);
   }
 
   // Método para guardar el token de sesión
@@ -60,6 +69,26 @@ export class DataService {
     return this.http.get<Usuario[]>(`${this.url}api/auth/getUsers`);
   }
 
+  getUser(id : number): Observable<Usuario>{
+    return this.http.get<Usuario>(`${this.url}api/auth/getUser`,{params: {id}});
+  }
+
+  getUsersByString(searchString : string): Observable<Usuario[]>{
+    console.log("El string que se envia para la lista de usuarios es : ",searchString);
+    return this.http.get<Usuario[]>(`${this.url}api/auth/getUsersByString`, { params: { string: searchString } });
+  }
+
+  getUsersByProyectId(id:number): Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(`${this.url}api/auth/getUsersByProyectId`, { params: {id} });
+  }
+
+  getProyectosByUserId(id :number): Observable<Proyecto[]>{
+    return this.http.get<Proyecto[]>(`${this.url}api/proyect/getProyectsByUserId`, { params: {id} });
+  }
+
+  getProyectoById(id :number): Observable<Proyecto>{
+    return this.http.get<Proyecto>(`${this.url}api/proyect/getProyectoById`, { params: {id} });
+  }
   // Método para cerrar sesión
   logout(): void {
     this.token = null;

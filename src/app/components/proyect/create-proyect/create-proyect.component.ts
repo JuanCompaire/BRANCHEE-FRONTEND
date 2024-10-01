@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../service/data.service';
+import { DataService } from '../../../service/data.service';
 import { Router } from '@angular/router';
-import { Usuario } from '../../models/Usuario';
-import { Proyecto } from '../../models/Proyecto';
+import { Usuario } from '../../../models/Usuario';
+import { Proyecto } from '../../../models/Proyecto';
 import { format } from 'date-fns';
 
 @Component({
@@ -13,8 +13,8 @@ import { format } from 'date-fns';
 export class CreateProyectComponent implements OnInit {
 
   user = new Usuario();
-  userListGet: Usuario[] = [];
-  selectedUserIds: number[] = []; // Array to hold selected user IDs
+  userList: Usuario[] = [];
+  selectedUserIds: Usuario[] = []; // Array to hold selected user objects
   proyect = new Proyecto();
   isDisabled = false;
 
@@ -29,39 +29,37 @@ export class CreateProyectComponent implements OnInit {
       this.user = user;
       console.log("Usuario Sesión: ", user.username);
     });
-
-    // Obtener la lista de usuarios
-    this.service.getUsers().subscribe({
-      next: (users: Usuario[]) => {
-        this.userListGet = users;
-        console.log("Lista de usuarios: ", this.userListGet);
-      },
-      error: (error) => {
-        console.error('Error al obtener usuarios:', error);
-      }
-    });
   }
 
-  onUserSelect(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    const selectedUserId = Number(target.value);
+  searchUser(event: any): void {
+    const searchString = event.target.value;
 
-    if (selectedUserId === null || isNaN(selectedUserId)) {
-      // Handle placeholder selection or do nothing
-      return;
+    if (searchString.length != '') {
+      this.service.getUsersByString(searchString).subscribe(
+        (users: Usuario[]) => {
+          this.userList = users;
+          console.log("El string es : ,",searchString+" La lista es : ",this.userList);
+        }
+        ,
+        (error) => {
+          console.error('Error fetching users:', error);
+        }
+      );
     }
+  }
 
-    // Verificar si el ID del usuario ya está en la lista de seleccionados
-    if (!this.selectedUserIds.includes(selectedUserId)) {
-      // Añadir el ID del usuario a la lista si no está ya en ella
-      this.selectedUserIds.push(selectedUserId);
+  addUser(user: Usuario, userSearch: HTMLInputElement): void {
+    // Evitar duplicados
+    if (!this.selectedUserIds.some(selectedUser => selectedUser.id === user.id)) {
+      this.selectedUserIds.push(user);
     }
-    console.log(this.selectedUserIds);
+    this.userList = [];  // Limpiar la lista de sugerencias después de agregar un usuario
+
+    userSearch.value = '';
   }
 
   removeUser(userId: number): void {
-    // Eliminar el ID del usuario de la lista de seleccionados
-    this.selectedUserIds = this.selectedUserIds.filter(id => id !== userId);
+    this.selectedUserIds = this.selectedUserIds.filter(user => user.id !== userId);
   }
 
   createProyect(): void {
@@ -69,14 +67,14 @@ export class CreateProyectComponent implements OnInit {
     this.proyect.id_boss = this.user.id;
     this.proyect.date_create = format(new Date(), 'dd-MM-yyyy');
 
-
     console.log("Datos a enviar al backend, del proyecto:", this.proyect);
     console.log("Datos a enviar al backend, de los usuarios:", this.selectedUserIds);
-    this.service.createProyect(this.proyect,this.selectedUserIds).subscribe({
+    this.service.createProyect(this.proyect, this.selectedUserIds.map(user => user.id)).subscribe({
       next: (response) => {
         // Successfully registered, redirect to main page
         console.log("Respuesta del servidor:", response);
-        // cambiar ruta --> this.router.navigateByUrl('login');
+        this.router.navigate(['/main-page']);
+
       },
       error: (error) => {
         // Handle any type of error
