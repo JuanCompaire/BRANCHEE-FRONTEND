@@ -12,6 +12,7 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { CreateProyectComponent } from './components/proyect/create-proyect/create-proyect.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ProyectDetailsComponent } from './components/proyect/proyect-details/proyect-details.component';
+import { CreateTaskComponent } from './components/task/create-task/create-task.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProyectDetailsComponent } from './components/proyect/proyect-details/pr
     LoginComponent,
     MainPageComponent,
     CreateProyectComponent,
-    ProyectDetailsComponent
+    ProyectDetailsComponent,
+    CreateTaskComponent
   ],
   imports: [
     BrowserModule,

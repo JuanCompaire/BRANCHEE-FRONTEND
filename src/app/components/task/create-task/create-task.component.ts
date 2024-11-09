@@ -1,27 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../../models/Usuario';
-import { DataService } from '../../service/data.service';
+import { DataService } from '../../../service/data.service';
 import { Router } from '@angular/router';
-import { ExcelService } from '../../service/excel.service';
-import { Proyecto } from '../../models/Proyecto';
+import { Tarea } from '../../../models/Tarea';
+import { Proyecto } from '../../../models/Proyecto';
 import { switchMap } from 'rxjs';
-
+import { Usuario } from '../../../models/Usuario';
 
 @Component({
-  selector: 'app-main-page',
-  templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css'] // Asegúrate de ajustar la propiedad correctamente
+  selector: 'app-create-task',
+  templateUrl: './create-task.component.html',
+  styleUrl: './create-task.component.css'
 })
-export class MainPageComponent implements OnInit {
+export class CreateTaskComponent implements OnInit{
 
-  user = new Usuario();
   proyectList: Proyecto[] = [];
-  showProjects : boolean = false;
+  task = new Tarea();
+  user = new  Usuario;
 
   constructor(
-    private service: DataService, // Usa inyección a través del constructor
+    private service: DataService,
     private router: Router,
-    private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
@@ -45,23 +43,11 @@ export class MainPageComponent implements OnInit {
     });
   }
 
-  logOut(): void{
-    console.log("LOG OUT");
-    this.service.logout();
-    this.router.navigateByUrl('login');
+  createTask(){
+
   }
 
-  toCreateProyect(): void{
-    console.log("REDIRECT TO CREATE PROYECT PAGE");
-    this.router.navigateByUrl('create-proyect');
-  }
-  toCreateTask(): void{
-    console.log("REDIRECT TO CREATE TASK PAGE");
-    this.router.navigateByUrl('create-task');
-  }
-
-  toProyectDetailsPage(id?: number): void{
-    this.router.navigate(['/details-proyect', id]);
-
+  goBack() {
+    this.router.navigate(['main-page']);
   }
 }

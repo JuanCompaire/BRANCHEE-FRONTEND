@@ -1,0 +1,154 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: seagreen;
+  background: url('../../../../assets/background_proyect_create.png') no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.wrapper {
+  width: 600px;;
+  height: auto;
+  background: transparent;
+  border: 2px solid rgba(255,255,255, .2);
+  backdrop-filter: blur(20px);
+  box-shadow:  0 0 10px rgba(0,0,0, .2);
+  color: #ded8ff;
+  border-radius: 10px;
+  padding: 30px 40px;
+}
+
+.wrapper h1{
+  font-size: 36px;
+  text-align: center;
+}
+
+.wrapper .input-box{
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 30px 0;
+}
+
+.input-box input {
+  width:100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255,255,255, .2);
+  border-radius: 40px;
+  font-size: 16px;
+  color:#ded8ff;
+  padding: 20px 56px 20px 20px;
+}
+
+.input-box input::placeholder{
+  color: #ded8ff;
+}
+
+.input-box i{
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform:  translateY(-50%);
+  font-size: 20px;
+}
+
+.wrapper .remember-forgot{
+  display: flex;
+  justify-content: space-between;
+  font-size: 14.5px;
+  margin:  -15px 0 15px;
+}
+
+.remember-forgot label input{
+  accent-color: #fff;
+  margin-right: 3px;
+}
+
+.remember-forgot a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.remember-forgot a:hover{
+  text-decoration: underline;
+}
+
+.wrapper .btn{
+  width: 100%;
+  height: 45px;
+  background:  #fff;
+  border: none;
+  outline:  none;
+  border-radius:  40px;
+  box-shadow: 0 0 10px rgba(0,0,0 .1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.wrapper .register-link{
+  font-size: 14.5px;
+  text-align: center;
+  margin: 20px 0 15px;
+}
+
+.register-link p a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-link p a:hover {
+  text-decoration: underline;
+}
+
+.profile img {
+	width: 36px;
+	height: 36px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.users-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se muevan a la siguiente línea cuando no hay más espacio */
+  gap: 15px; /* Espacio entre los elementos */
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+}
+
+.user-bubble {
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1; /* Color de fondo para los elementos de usuario */
+  padding: 5px 10px; /* Espaciado interno */
+  border-radius: 20px; /* Bordes redondeados */
+}
+
+.user-icon {
+  width: 30px; /* Tamaño del icono */
+  height: 30px; /* Tamaño del icono */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+
+.user-info {
+  margin-right: 10px; /* Espacio entre el texto y el icono de eliminar */
+  color:rgb(80, 109, 236);
+}
