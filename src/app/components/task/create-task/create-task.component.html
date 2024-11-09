@@ -19,27 +19,42 @@
 
       <div >
         <div class="row">
-          <div class="col-6">
+          <div class="col-3">
             <!--name-->
             <label for="basic-url" class="form-label">Task Name<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="name" [value]="task.name" >
+            <input type="email" class="form-control" style="background: transparent;color:azure;" id="name" [value]="task.name" >
           </div>
-          <div class="col-6">
-            <!--proyect id-->
-            <label for="basic-url" class="form-label">Proyect Id<i class="bi bi-journal-code" style="margin-left: 5px;"></i></label>
-            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="date_create" [value]="task.id_proyect" >
+          <div class="col-3 ">
+            <!--proyect-->
+            <label for="basic-url" class="form-label">Proyect <i class="bi bi-journal-code" style="margin-left: 5px;"></i></label>
+            <input  class="form-control" style="background: transparent;color:azure;" id="date_create" placeholder="ASSIGN TO A PROJECT" [value]="task.id_proyect" (click)="toggleDropdown()"/>
+            <ul class="dropdown-menu" [class.show]="isDropDownOpen">
+              <li *ngFor="let proyect of proyectList">
+                <a
+                  class="dropdown-item"
+                  (click)="selectProject(proyect)"
+                >{{ proyect.name }}</a>
+              </li>
+            </ul>
           </div>
+
           <br>
+          <div class="col-3">
+            <!--status-->
+            <label for="basic-url" class="form-label">Status<i class="bi bi-calendar3" style="margin-left: 5px;"></i></label>
+            <input type="email" class="form-control" style="background: transparent;color:azure" id="date_create" [value]="task.estado" >
+          </div>
+          <div class="col-3">
+            <!--date-->
+            <label for="basic-url" class="form-label">Date<i class="bi bi-calendar3" style="margin-left: 5px;"></i></label>
+            <input type="email" class="form-control" style="background: transparent;color:azure" id="date_create" [value]="task." >
+          </div>
           <div class="col-6">
-            <!--boss-->
+            <!--description-->
             <label for="basic-url" class="form-label">Description<i class="bi bi-person-gear" style="margin-left: 5px;"></i></label>
             <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="name" [value]="task.descripcion" >
           </div>
-          <div class="col-6">
-            <!--date_create-->
-            <label for="basic-url" class="form-label">Status<i class="bi bi-calendar3" style="margin-left: 5px;"></i></label>
-            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="date_create" [value]="task.estado" >
-          </div>
+
         </div>
       </div>
       <!--BUTTONS-->

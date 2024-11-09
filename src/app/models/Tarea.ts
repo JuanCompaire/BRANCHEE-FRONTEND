@@ -7,5 +7,7 @@ export class Tarea{
   image: string = "";
   estado: string = "";
   importancia: string = "";
+  date_created: string = "";
+  date_last_update: string = "";
 
 }

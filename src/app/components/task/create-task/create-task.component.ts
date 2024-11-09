@@ -16,6 +16,7 @@ export class CreateTaskComponent implements OnInit{
   proyectList: Proyecto[] = [];
   task = new Tarea();
   user = new  Usuario;
+  isDropDownOpen = false;
 
   constructor(
     private service: DataService,
@@ -45,6 +46,15 @@ export class CreateTaskComponent implements OnInit{
 
   createTask(){
 
+  }
+
+  toggleDropdown() {
+    this.isDropDownOpen = !this.isDropDownOpen;
+  }
+
+  selectProject(proyect: any) {
+    this.task.id_proyect = proyect.name;
+    this.isDropDownOpen = false;
   }
 
   goBack() {
