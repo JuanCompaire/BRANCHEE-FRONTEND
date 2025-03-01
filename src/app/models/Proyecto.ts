@@ -1,8 +1,10 @@
 import { Usuario } from "./Usuario";
 
 export class Proyecto{
-  id?:number;
-  name: string = "";
+  proyectoId?:number;
+  name_proyect: string = "";
   id_boss: number = 0;
   date_create: string = "";
+  usuarios:Usuario[] =[];
+
 }

@@ -20,7 +20,7 @@
       <p class="firstLine">C &nbsp; R &nbsp; E &nbsp; A &nbsp; T &nbsp; E &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; P &nbsp; R &nbsp; O &nbsp; Y &nbsp; E &nbsp; C &nbsp; T</p>
       <br>
       <!-- Input para el nombre del proyecto -->
-      <input type="text" class="form-control" placeholder="PROYECT NAME" [(ngModel)]="proyect.name" name="proyectName" required #proyectName="ngModel">
+      <input type="text" class="form-control" placeholder="PROYECT NAME" [(ngModel)]="proyect.name_proyect" name="proyectName" required #proyectName="ngModel">
       <!-- Mensaje de error si no es válido -->
       <div *ngIf="proyectName.invalid && proyectName.touched" class="text-danger">
         Project name is required.

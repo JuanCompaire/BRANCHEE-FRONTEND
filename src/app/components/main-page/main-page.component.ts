@@ -61,7 +61,10 @@ export class MainPageComponent implements OnInit {
   }
 
   toProyectDetailsPage(id?: number): void{
-    this.router.navigate(['/details-proyect', id]);
-
+    if (id !== undefined && id !== null) {
+      this.router.navigate(['/details-proyect', id]);
+   }else {
+      console.error('Error: ID es undefined o null');
+    }
   }
 }

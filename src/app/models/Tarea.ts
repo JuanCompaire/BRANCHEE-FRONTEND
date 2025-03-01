@@ -1,13 +1,13 @@
 
 export class Tarea{
   id?:number;
-  id_proyect?:number;
+  id_proyecto?:number;
   name: string = "";
   descripcion: string = "";
   image: string = "";
   estado: string = "";
   importancia: string = "";
-  date_created: string = "";
+  date_create: string = "";
   date_last_update: string = "";
 
 }

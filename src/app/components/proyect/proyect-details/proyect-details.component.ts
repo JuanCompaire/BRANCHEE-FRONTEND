@@ -7,7 +7,7 @@ import { Usuario } from '../../../models/Usuario';
 @Component({
   selector: 'app-proyect-details',
   templateUrl: './proyect-details.component.html',
-  styleUrls: ['./proyect-details.component.css'] // Corrige 'styleUrl' a 'styleUrls'
+  styleUrls: ['./proyect-details.component.css']
 })
 export class ProyectDetailsComponent implements OnInit {
   proyectId: number = 0;
@@ -41,9 +41,9 @@ export class ProyectDetailsComponent implements OnInit {
         if (this.proyect_details.id_boss) {
           this.loadUserBoss(this.proyect_details.id_boss);
         }
-        if (this.proyect_details.id) {
-          this.loadProjectUsers(this.proyect_details.id);
-        }
+        if (this.proyect_details.proyectoId) {
+          this.selectedUserIds = this.proyect_details.usuarios;
+               }
       },
       error: (error) => {
         console.error('Error al obtener el proyecto: ', error);
@@ -60,15 +60,6 @@ export class ProyectDetailsComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar el jefe:', error);
-      }
-    });
-  }
-
-  loadProjectUsers(proyectId: number) {
-    this.service.getUsersByProyectId(proyectId).subscribe({
-      next: (users: Usuario[]) => {
-        this.selectedUserIds = users; // Asigna los usuarios del proyecto a la lista seleccionada
-        console.log("La lista de usuarios del proyecto es : ", this.selectedUserIds);
       }
     });
   }
