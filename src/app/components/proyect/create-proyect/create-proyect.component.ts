@@ -65,11 +65,21 @@ export class CreateProyectComponent implements OnInit {
   createProyect(): void {
     //se le asigna la id del usario que crea el proyecto, a la id del jefe de proyecto
     this.proyect.id_boss = this.user.id;
-    this.proyect.date_create = format(new Date(), 'dd-MM-yyyy');
-
-    console.log("Datos a enviar al backend, del proyecto:", this.proyect);
-    console.log("Datos a enviar al backend, de los usuarios:", this.selectedUserIds);
-    this.service.createProyect(this.proyect, this.selectedUserIds.map(user => user.id)).subscribe({
+    this.proyect.date_create = "";
+    const requestBody = {
+      proyectoId: -1,
+      name_proyect: this.proyect.name_proyect,
+      id_boss: this.proyect.id_boss,
+      dateCreate: this.proyect.date_create,
+      usuarios: this.selectedUserIds.map(user => ({
+         usuarioId: user.id,
+         username: user.username,
+         email:user.email
+        })), // Transformamos los IDs
+      tareas: null
+    };
+    console.log("Datos a enviar al backend, del proyecto:", requestBody);
+    this.service.createProyect(requestBody).subscribe({
       next: (response) => {
         // Successfully registered, redirect to main page
         console.log("Respuesta del servidor:", response);

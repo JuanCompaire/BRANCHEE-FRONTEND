@@ -74,12 +74,10 @@ export class DataService {
   //PROYECT//
 
   //Create Proyect
-  createProyect(proyecto: Record<string, any>, selectedUserIds: number[]): Observable<any>{
-    const requestBody = {
-      proyecto : proyecto,
-      selectedUserIds : selectedUserIds
-    };
-    return this.http.post<any>(`${this.url}api/proyect/create`,requestBody);
+  createProyect(proyecto: Record<string, any>): Observable<any>{
+    return this.http.post<any>(`${this.url}api/proyect/create`,proyecto, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   //Edit Proyect
