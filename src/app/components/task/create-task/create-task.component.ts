@@ -21,6 +21,8 @@ export class CreateTaskComponent implements OnInit{
   isDropDownOpen = false;
   selectedFile: File | null = null;
   selectedProjectName: string = '';
+  status_options = ["OPEN","WORKING ON IT","CLOSED"];
+  import_options = ["LOW","MEDIUM","HIGH"];
 
 
   constructor(
@@ -55,7 +57,6 @@ export class CreateTaskComponent implements OnInit{
     //we put today date to the creation and last update attribute
     this.task.date_last_update = todayDate;
     this.task.date_create = todayDate;
-    this.task.estado = 'Open';
 
     if(this.selectedFile){
       const formData = new FormData();
@@ -74,7 +75,6 @@ export class CreateTaskComponent implements OnInit{
       });
     } else {
       // Si no hay archivo, simplemente crea la tarea
-      console.log('TASK DATA:', this.task);
       this.service.createTask(this.task).subscribe({
         next: (response) => {
           console.log('Task created:', response);

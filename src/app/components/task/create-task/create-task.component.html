@@ -37,6 +37,29 @@
               </li>
             </ul>
           </div>
+          <div class="col-3">
+            <!-- Status -->
+            <label for="status" class="form-label">
+              STATUS <i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i>
+            </label>
+            <select [(ngModel)]="task.estado" name="status" class="form-select">
+              <option *ngFor="let option of status_options" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-3">
+            <!-- Importance -->
+            <label for="importance" class="form-label">
+              IMPORTANCE <i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i>
+            </label>
+            <select [(ngModel)]="task.importancia" name="importance" class="form-select">
+              <option *ngFor="let option of import_options" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
 
           <br>
 
