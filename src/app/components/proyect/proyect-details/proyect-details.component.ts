@@ -14,7 +14,8 @@ export class ProyectDetailsComponent implements OnInit {
   proyect_details = new Proyecto();
   user_boss = new Usuario();
   user_list: Usuario[] = [];
-  selectedUserIds: Usuario[] = [];
+  //selectedUserIds: Usuario[] = [];
+  selectedUsers: { usuarioId: number; username: string; email: string }[] = [];
   user = new Usuario();
   isDisabled = false;
   showUserList: boolean = false;
@@ -42,7 +43,8 @@ export class ProyectDetailsComponent implements OnInit {
           this.loadUserBoss(this.proyect_details.id_boss);
         }
         if (this.proyect_details.proyectoId) {
-          this.selectedUserIds = this.proyect_details.usuarios;
+          this.selectedUsers = this.proyect_details.usuarios;
+          console.log("los usuarios iniciales del proyecto antes de la edicion son : ",this.selectedUsers);
                }
       },
       error: (error) => {
@@ -82,25 +84,43 @@ export class ProyectDetailsComponent implements OnInit {
 
   checkIfBoss() {
     console.log("El user es : ", this.user);
-    this.userIsBoss = this.user.id === this.proyect_details.id_boss;
+    this.userIsBoss = this.user.usuarioId === this.proyect_details.id_boss;
     console.log(this.userIsBoss ? "Eres el boss del proyecto" : "Eres un user del proyecto");
   }
 
   addUser(user: Usuario, userSearch: HTMLInputElement): void {
-    if (!this.selectedUserIds.some(selectedUser => selectedUser.id === user.id)) {
-      this.selectedUserIds.push(user);
+    if (!this.selectedUsers.some(selectedUser => selectedUser.usuarioId === user.usuarioId)) {
+      const userWithOutPassword = {
+        usuarioId: user.usuarioId,
+        username: user.username,
+        email: user.email
+      };
+      this.selectedUsers.push(userWithOutPassword);
     }
     this.user_list = []; // Eliminar de la lista de usuarios disponibles
     userSearch.value = '';
-    console.log("La lista de usuarios seleccionados para este proyecto son : ",this.selectedUserIds);
+    console.log("La lista de usuarios seleccionados para este proyecto son : ",this.selectedUsers);
   }
 
   removeUser(userId: number): void {
-    this.selectedUserIds = this.selectedUserIds.filter(user => user.id !== userId);
+    this.selectedUsers = this.selectedUsers.filter(user => user.usuarioId !== userId);
   }
 
   editProyect(): void {
-    this.service.editProyect(this.proyect_details,this.selectedUserIds.map(user => user.id)).subscribe({
+    const requestBody = {
+      proyectoId: this.proyect_details.proyectoId,
+      name_proyect: this.proyect_details.name_proyect,
+      id_boss: this.proyect_details.id_boss,
+      dateCreate: this.proyect_details.date_create,
+      usuarios: this.selectedUsers.map(user => ({
+         usuarioId: user.usuarioId,
+         username: user.username,
+         email:user.email
+        })),
+      tareas: null
+    };
+    console.log("PROJECT DETAILS TO EDIT : ",this.proyect_details);
+    this.service.editProyect(requestBody).subscribe({
       next: (response) => {
         console.log("Respuesta del servidor:", response);
         this.router.navigate(['/main-page']);

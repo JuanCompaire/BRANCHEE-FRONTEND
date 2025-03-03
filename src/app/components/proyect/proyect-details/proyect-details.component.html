@@ -22,7 +22,7 @@
           <div class="col-6">
             <!--name-->
             <label for="basic-url" class="form-label">Proyect Name<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="name" [value]="proyect_details.name_proyect" readonly>
+            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="name" [value]="proyect_details.name_proyect" [(ngModel)]="proyect_details.name_proyect" name="proyectName" [contentEditable]="userIsBoss">
           </div>
           <div class="col-6">
             <!--proyect id-->
@@ -54,11 +54,11 @@
 
           <label for="basic-url" class="form-label">Users List<i style="margin-left: 5px;"></i></label>
           <div class="users-container">
-            <div class="user-item"*ngFor="let user of selectedUserIds"[class.show]="selectedUserIds.length > 0">
+            <div class="user-item"*ngFor="let user of selectedUsers"[class.show]="selectedUsers.length > 0">
                 <div class="user-bubble">
                   <img src="assets/user_icon.webp"alt="User Icon" class="user-icon">
                   <p class="user-info">{{ user.username }}</p>
-                  <i class="bi bi-trash3-fill text-danger" (click)="removeUser(user.id)" *ngIf="userIsBoss"style="cursor: pointer;"></i>
+                  <i class="bi bi-trash3-fill text-danger" (click)="removeUser(user.usuarioId)" *ngIf="userIsBoss"style="cursor: pointer;"></i>
                 </div>
             </div>
           </div>

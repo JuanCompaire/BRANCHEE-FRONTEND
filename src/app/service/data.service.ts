@@ -81,12 +81,8 @@ export class DataService {
   }
 
   //Edit Proyect
-  editProyect(proyecto: Record<string, any>, selectedUserIds: number[]): Observable<any>{
-    const requestBody = {
-      proyecto : proyecto,
-      selectedUserIds : selectedUserIds
-    };
-    return this.http.post<any>(`${this.url}api/proyect/edit`,requestBody);
+  editProyect(proyecto: Record<string, any>): Observable<any>{
+    return this.http.post<any>(`${this.url}api/proyect/edit`,proyecto);
   }
 
   //Get Users by Proyect Id

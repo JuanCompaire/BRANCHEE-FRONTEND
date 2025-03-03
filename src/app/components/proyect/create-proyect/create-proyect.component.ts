@@ -50,7 +50,7 @@ export class CreateProyectComponent implements OnInit {
 
   addUser(user: Usuario, userSearch: HTMLInputElement): void {
     // Evitar duplicados
-    if (!this.selectedUserIds.some(selectedUser => selectedUser.id === user.id)) {
+    if (!this.selectedUserIds.some(selectedUser => selectedUser.usuarioId === user.usuarioId)) {
       this.selectedUserIds.push(user);
     }
     this.userList = [];  // Limpiar la lista de sugerencias después de agregar un usuario
@@ -59,12 +59,12 @@ export class CreateProyectComponent implements OnInit {
   }
 
   removeUser(userId: number): void {
-    this.selectedUserIds = this.selectedUserIds.filter(user => user.id !== userId);
+    this.selectedUserIds = this.selectedUserIds.filter(user => user.usuarioId !== userId);
   }
 
   createProyect(): void {
     //se le asigna la id del usario que crea el proyecto, a la id del jefe de proyecto
-    this.proyect.id_boss = this.user.id;
+    this.proyect.id_boss = this.user.usuarioId;
     this.proyect.date_create = "";
     const requestBody = {
       proyectoId: -1,
@@ -72,7 +72,7 @@ export class CreateProyectComponent implements OnInit {
       id_boss: this.proyect.id_boss,
       dateCreate: this.proyect.date_create,
       usuarios: this.selectedUserIds.map(user => ({
-         usuarioId: user.id,
+         usuarioId: user.usuarioId,
          username: user.username,
          email:user.email
         })), // Transformamos los IDs
