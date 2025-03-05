@@ -61,7 +61,7 @@ export class CreateTaskComponent implements OnInit{
     if(this.selectedFile){
       const formData = new FormData();
       formData.append('file',this.selectedFile);
-      formData.append('task',JSON.stringify(this.task));
+      formData.append('task', new Blob([JSON.stringify(this.task)], { type: 'application/json' })); // <-- Se convierte a Blob para que Spring lo interprete correctamente
 
       this.service.createTaskPhoto(formData).subscribe({
         next: (response) => {

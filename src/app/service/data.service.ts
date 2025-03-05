@@ -95,6 +95,11 @@ export class DataService {
     return this.http.get<Proyecto[]>(`${this.url}api/proyect/getProyectsByUserId`, { params: {id} });
   }
 
+  //Get Tasks by user Id
+  getTasksByUserId(userId : number): Observable<Tarea[]>{
+    return this.http.get<Tarea[]>(`${this.url}api/task/getTasksByUserId`, { params: {userId} });
+  }
+
   //Get Proyect by Id
   getProyectoById(id :number): Observable<Proyecto>{
     return this.http.get<Proyecto>(`${this.url}api/proyect/getById`, { params: {id} });
@@ -112,4 +117,12 @@ export class DataService {
     return this.http.post<Tarea>(`${this.url}api/task/createTaskPhoto`, formData);
   }
 
+  //Get Task by Id
+  getTaskById(id :number): Observable<Tarea>{
+    return this.http.get<Tarea>(`${this.url}api/task/getById`, { params: {id} });
+  }
+
+  editTask(tarea: Record<string, any>): Observable<any>{
+    return this.http.post<any>(`${this.url}api/task/edit`,tarea);
+  }
 }

@@ -86,6 +86,12 @@
           <a><span class="proyect">{{ proyect.name_proyect }}</span><i class='bx bx-search-alt' (click)="toProyectDetailsPage(proyect.proyectoId)"></i></a>
         </div>
       </div>
+      <div class="mt-3">Tareas
+        <div *ngFor="let task of taskList" class="d-flex align-items-center mb-2">
+          <a><span class="proyect">{{ task.name_task }}</span><i class='bx bx-search-alt' (click)="toTaskDetailsPage(task.tareaId)"></i></a>
+        </div>
+      </div>
+
 
 
 			<ul class="box-info">

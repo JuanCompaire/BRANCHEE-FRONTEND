@@ -15,34 +15,27 @@
 <body>
   <div class="wrapper">
     <form>
-      <h1>TASK CREATE</h1>
+      <h1>TASK DETAILS</h1>
 
       <div >
         <div class="row">
           <div class="col-3">
             <!--name-->
             <label for="basic-url" class="form-label">Task Name<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <input type="text" class="form-control" style="background: transparent;color:azure;" name="name"  [(ngModel)]="task.name_task" >
+            <input type="text" class="form-control" style="background: transparent;color:azure;" name="name"  [(ngModel)]="taskDetails.name_task" readonly>
           </div>
           <div class="col-3 ">
             <!--proyect-->
-            <label for="basic-url" class="form-label">Proyect <i class="bi bi-journal-code" style="margin-left: 5px;"></i></label>
-            <input class="form-control" style="background: transparent; color: azure;" name="proyect" [value]="selectedProjectName" readonly (click)="toggleDropdown()"/>
-            <ul class="dropdown-menu" [class.show]="isDropDownOpen">
-              <li *ngFor="let proyect of proyectList">
-                <a
-                  class="dropdown-item"
-                  (click)="selectProject(proyect)"
-                >{{ proyect.name_proyect }}</a>
-              </li>
-            </ul>
+            <label for="basic-url" class="form-label">Proyect<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
+            <input type="text" class="form-control" style="background: transparent;color:azure;" name="proyect"  [(ngModel)]="taskDetails.id_proyecto" readonly>
           </div>
+
           <div class="col-3">
             <!-- Status -->
             <label for="status" class="form-label">
               STATUS <i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i>
             </label>
-            <select [(ngModel)]="task.estado" name="status" class="form-select">
+            <select [(ngModel)]="taskDetails.estado" name="status" class="form-select">
               <option *ngFor="let option of status_options" [value]="option">
                 {{ option }}
               </option>
@@ -54,7 +47,7 @@
             <label for="importance" class="form-label">
               IMPORTANCE <i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i>
             </label>
-            <select [(ngModel)]="task.importancia" name="importance" class="form-select">
+            <select [(ngModel)]="taskDetails.importancia" name="importance" class="form-select">
               <option *ngFor="let option of import_options" [value]="option">
                 {{ option }}
               </option>
@@ -66,12 +59,12 @@
           <div class="col-6">
             <!--description-->
             <label for="basic-url" class="form-label">Description<i class="bi bi-person-gear" style="margin-left: 5px;"></i></label>
-            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" name="description"  [(ngModel)]="task.descripcion"/>
+            <!-- <input type="textarea" class="form-control" style="background: transparent;color:azure;width:auto" name="description"  [(ngModel)]="taskDetails.descripcion"/> -->
+             <textarea class="form-control" style="background: transparent;color:azure;width:auto" name="description" [(ngModel)]="taskDetails.descripcion"></textarea>
           </div>
           <div class="col-6">
             <!--photo-->
-            <label for="photo" class="form-label">Upload Photo</label>
-            <input type="file" class="form-control" id="photo" (change)="onFileSelected($event)" accept="image/*"/>
+            <img style="height: 250px;width: 250px;" [src]="'http://localhost:8080/api/images/' + taskDetails.image" alt="Imagen">
           </div>
 
         </div>
@@ -81,7 +74,7 @@
         <!--CUANDO userIsBoss ES FALSO (Save y Back ocupan la mitad cada uno)-->
         <div  class="input-box col-12 d-flex justify-content-between">
           <!--SAVE-->
-          <button type="submit" class="btn btn-primary w-50 me-2" (click)="createTask()">Create</button>
+          <button type="submit" class="btn btn-primary w-50 me-2" (click)="editTask()">Save</button>
           <!--BACK-->
           <button type="button" class="btn btn-secondary w-50 ms-2" (click)="goBack()">Back</button>
         </div>

@@ -6,6 +6,7 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { CreateProyectComponent } from './components/proyect/create-proyect/create-proyect.component';
 import { ProyectDetailsComponent } from './components/proyect/proyect-details/proyect-details.component';
 import { CreateTaskComponent } from './components/task/create-task/create-task.component';
+import { DetailsTaskComponent } from './components/task/details-task/details-task.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'create-proyect', component: CreateProyectComponent },
   { path: 'details-proyect/:id', component: ProyectDetailsComponent},
   { path: 'create-task', component: CreateTaskComponent },
+  { path: 'details-task/:id', component: DetailsTaskComponent},
 
 ];
 

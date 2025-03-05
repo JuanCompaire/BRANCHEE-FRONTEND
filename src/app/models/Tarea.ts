@@ -1,8 +1,8 @@
 
 export class Tarea{
-  id?:number;
+  tareaId?:number;
   id_proyecto?:number;
-  name: string = "";
+  name_task: string = "";
   descripcion: string = "";
   image: string = "";
   estado: string = "";

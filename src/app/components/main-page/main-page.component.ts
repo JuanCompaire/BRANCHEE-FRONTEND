@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ExcelService } from '../../service/excel.service';
 import { Proyecto } from '../../models/Proyecto';
 import { switchMap } from 'rxjs';
+import { Tarea } from '../../models/Tarea';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class MainPageComponent implements OnInit {
 
   user = new Usuario();
   proyectList: Proyecto[] = [];
+  taskList:Tarea[] = [];
   showProjects : boolean = false;
 
   constructor(
@@ -31,7 +33,14 @@ export class MainPageComponent implements OnInit {
       switchMap(user => {
         this.user = user;  // Asigna el usuario a this.user
         console.log("Usuario Sesión: ", user);
-        // Llama al servicio para obtener los proyectos usando el ID del usuario
+        this.service.getTasksByUserId(user.id).subscribe(
+          {
+            next : (tasks : Tarea[]) => {
+              this.taskList = tasks;
+              console.log("Lista de tasks: ", this.taskList);
+            }
+          }
+        );
         return this.service.getProyectosByUserId(user.id);
       })
     ).subscribe({
@@ -63,6 +72,13 @@ export class MainPageComponent implements OnInit {
   toProyectDetailsPage(id?: number): void{
     if (id !== undefined && id !== null) {
       this.router.navigate(['/details-proyect', id]);
+   }else {
+      console.error('Error: ID es undefined o null');
+    }
+  }
+  toTaskDetailsPage(id?: number): void{
+    if (id !== undefined && id !== null) {
+      this.router.navigate(['/details-task', id]);
    }else {
       console.error('Error: ID es undefined o null');
     }
