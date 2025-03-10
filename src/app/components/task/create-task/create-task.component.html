@@ -61,6 +61,28 @@
             </select>
           </div>
 
+          <div class="col-12">
+            <!-- USERS ASSIGNED SELECT -->
+            <label for="user_assigned" class="form-label">
+              USERS ASSIGNED
+            </label>
+            <select  name="user_assigned" class="form-select" (change)="onUserSelected($event)">
+              <option *ngFor="let user of assignedUsers_options " [value]="user.usuarioId">
+                {{ user.username }}
+              </option>
+            </select>
+          </div>
+
+          <div class="users-container">
+            <div *ngFor="let user of assignedUsers" [class.show]="assignedUsers.length > 0">
+              <div class="user-bubble">
+                <img src="assets/user_icon.webp"alt="User Icon" class="user-icon">
+                <p class="user-info">{{ user.username }}</p>
+                <i class="bi bi-trash text-danger" (click)="removeUser(user.usuarioId)" style="cursor: pointer;"></i>
+              </div>
+            </div>
+          </div>
+
           <br>
 
           <div class="col-6">

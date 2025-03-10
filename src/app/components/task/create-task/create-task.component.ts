@@ -23,7 +23,8 @@ export class CreateTaskComponent implements OnInit{
   selectedProjectName: string = '';
   status_options = ["OPEN","WORKING ON IT","CLOSED"];
   import_options = ["LOW","MEDIUM","HIGH"];
-
+  assignedUsers: { usuarioId: number; username: string; email: string }[] = [];
+  assignedUsers_options: { usuarioId: number; username: string; email: string }[] = [];
 
   constructor(
     private service: DataService,
@@ -50,6 +51,7 @@ export class CreateTaskComponent implements OnInit{
       }
     });
   }
+
   // create task function
   createTask(){
     var newDate = new Date();
@@ -57,6 +59,8 @@ export class CreateTaskComponent implements OnInit{
     //we put today date to the creation and last update attribute
     this.task.date_last_update = todayDate;
     this.task.date_create = todayDate;
+    this.task.user_id_created_task = this.user.usuarioId;
+    this.task.usuarios = this.assignedUsers;
 
     if(this.selectedFile){
       const formData = new FormData();
@@ -99,6 +103,15 @@ export class CreateTaskComponent implements OnInit{
     this.selectedProjectName = proyect.name_proyect; // Guarda el nombre del proyecto seleccionado
     console.log("El task id_proyect es : ", this.task.id_proyecto);
     this.isDropDownOpen = false;
+
+    this.service.getUsersByProyectId(this.task.id_proyecto ?? 0).subscribe({
+      next: (users: Usuario[]) => {
+        this.assignedUsers_options = users;
+        console.log("Los usuarios del proyecto son : ",this.assignedUsers);
+      },error: (error) => {
+        console.error('Error geting the users of the proyect:', error);
+      },
+    });
   }
 
   onFileSelected(event: Event): void {
@@ -107,6 +120,27 @@ export class CreateTaskComponent implements OnInit{
       this.selectedFile = input.files[0];
       console.log('Archivo seleccionado:', this.selectedFile);
     }
+  }
+
+  onUserSelected(event: Event){
+    const selectedUserId = Number((event.target as HTMLSelectElement).value);
+    const selectedUser = this.assignedUsers_options.find(user => user.usuarioId === selectedUserId);
+
+    if (selectedUser) {
+      this.addUser(selectedUser.usuarioId, selectedUser.username, selectedUser.email);
+    }
+  }
+
+  addUser(usuarioId: number, username: string, email: string){
+    if(!this.assignedUsers.some(selectedUser => selectedUser.usuarioId === usuarioId)){
+      this.assignedUsers.push({usuarioId,username,email});
+      console.log("La lista de assignedUsers ha sido modificada : ", this.assignedUsers);
+    }
+  }
+
+  removeUser(userId: number): void {
+    this.assignedUsers = this.assignedUsers.filter(user => user.usuarioId !== userId);
+    console.log("La lista de assignedUsers ha sido modificada : ", this.assignedUsers);
   }
 
   goBack() {

@@ -71,6 +71,11 @@ export class DataService {
     return this.http.get<Usuario[]>(`${this.url}api/auth/getUsersByString`, { params: { string: searchString } });
   }
 
+  //Get Users by Proyect Id
+  getUsersByProyectId(id:number): Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(`${this.url}api/auth/getUsersByProyectId`, { params: {id} });
+  }
+
   //PROYECT//
 
   //Create Proyect
@@ -83,11 +88,6 @@ export class DataService {
   //Edit Proyect
   editProyect(proyecto: Record<string, any>): Observable<any>{
     return this.http.post<any>(`${this.url}api/proyect/edit`,proyecto);
-  }
-
-  //Get Users by Proyect Id
-  getUsersByProyectId(id:number): Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(`${this.url}api/auth/getUsersByProyectId`, { params: {id} });
   }
 
   //Get Proyects by user Id
