@@ -76,6 +76,7 @@ export class MainPageComponent implements OnInit {
       console.error('Error: ID es undefined o null');
     }
   }
+
   toTaskDetailsPage(id?: number): void{
     if (id !== undefined && id !== null) {
       this.router.navigate(['/details-task', id]);

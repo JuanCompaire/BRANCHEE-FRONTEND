@@ -132,6 +132,23 @@ export class ProyectDetailsComponent implements OnInit {
     });
   }
 
+  getBorderColor(estado: string): string {
+    switch (estado) {
+      case 'WORKING ON IT': return 'orange';
+      case 'OPEN': return 'green';
+      case 'CLOSED': return 'red';
+      default: return 'gray'; // Color por defecto si el estado no coincide
+    }
+  }
+
+  toTaskDetailsPage(id?: number): void{
+    if (id !== undefined && id !== null) {
+      this.router.navigate(['/details-task', id]);
+   }else {
+      console.error('Error: ID es undefined o null');
+    }
+  }
+
   goBack() {
     this.router.navigate(['main-page']);
   }

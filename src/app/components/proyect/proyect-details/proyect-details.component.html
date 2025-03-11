@@ -40,6 +40,7 @@
             <label for="basic-url" class="form-label">Created Date<i class="bi bi-calendar3" style="margin-left: 5px;"></i></label>
             <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" id="date_create" [value]="proyect_details.date_create" readonly>
           </div>
+
           <div class="col-12" *ngIf="userIsBoss">
             <!--user list-->
             <div class="position-relative">
@@ -52,7 +53,7 @@
             </div>
           </div>
 
-          <label for="basic-url" class="form-label">Users List<i style="margin-left: 5px;"></i></label>
+          <label for="basic-url" class="form-label">USERS LIST<i style="margin-left: 5px;"></i></label>
           <div class="users-container">
             <div class="user-item"*ngFor="let user of selectedUsers"[class.show]="selectedUsers.length > 0">
                 <div class="user-bubble">
@@ -62,6 +63,17 @@
                 </div>
             </div>
           </div>
+
+          <!-- TASKS LIST -->
+          <label for="basic-url" class="form-label">TASKS LIST<i style="margin-left: 5px;"></i></label>
+          <div class="users-container">
+            <div class="user-item"*ngFor="let task of proyect_details.tareas" [class.show]="proyect_details.tareas.length > 0">
+              <div class="user-bubble" [ngStyle]="{'border-color': getBorderColor(task.estado)}">
+                <p class="user-info" (click)="toTaskDetailsPage(task.tareaId)">{{ task.name_task }}</p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       <!--BUTTONS-->

@@ -140,6 +140,8 @@ body{
   background-color: #f1f1f1; /* Color de fondo para los elementos de usuario */
   padding: 5px 10px; /* Espaciado interno */
   border-radius: 20px; /* Bordes redondeados */
+  border-width: 2.5px;
+  border-style: solid;
 }
 
 .user-icon {
@@ -151,4 +153,20 @@ body{
 .user-info {
   margin-right: 10px; /* Espacio entre el texto y el icono de eliminar */
   color:rgb(80, 109, 236);
+}
+
+.border-orange {
+  border-color: orange;
+}
+
+.border-green {
+  border-color: green;
+}
+
+.border-red {
+  border-color: red;
+}
+
+.border-gray {
+  border-color: gray;
 }

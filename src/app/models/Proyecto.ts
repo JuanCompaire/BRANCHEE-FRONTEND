@@ -7,6 +7,6 @@ export class Proyecto{
   id_boss: number = 0;
   date_create: string = "";
   usuarios:Usuario[] =[];
-  tareas = null;
+  tareas: Tarea[] = [];
 
 }
