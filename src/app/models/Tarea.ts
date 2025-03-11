@@ -1,3 +1,4 @@
+import { Chat } from "./Chat";
 
 export class Tarea{
   tareaId?:number;
@@ -11,4 +12,5 @@ export class Tarea{
   date_last_update: string = "";
   user_id_created_task:number = -1;
   usuarios: { usuarioId: number; username: string; email: string }[] = [];
+  chats: Chat[] =[];
 }
