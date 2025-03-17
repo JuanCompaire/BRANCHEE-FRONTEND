@@ -54,41 +54,33 @@ export class CreateTaskComponent implements OnInit{
 
   // create task function
   createTask(){
-    var newDate = new Date();
+    const newDate = new Date();
     const todayDate = `${newDate.getDate()}-${newDate.getMonth() + 1}-${newDate.getFullYear()}`;
+
     //we put today date to the creation and last update attribute
     this.task.date_last_update = todayDate;
     this.task.date_create = todayDate;
     this.task.user_id_created_task = this.user.usuarioId;
     this.task.usuarios = this.assignedUsers;
 
-    if(this.selectedFile){
-      const formData = new FormData();
-      formData.append('file',this.selectedFile);
-      formData.append('task', new Blob([JSON.stringify(this.task)], { type: 'application/json' })); // <-- Se convierte a Blob para que Spring lo interprete correctamente
+    const formData = new FormData();
+    formData.append('task', new Blob([JSON.stringify(this.task)], { type: 'application/json' }));
 
-      this.service.createTaskPhoto(formData).subscribe({
-        next: (response) => {
-          console.log('Task created with photo:', response);
-          this.router.navigate(['/main-page']);
+    // Si hay archivo, lo añadimos al FormData
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
+    }
 
-        },
-        error: (error) => {
-          console.error('Error creating the task with photo:', error);
-        },
-      });
-    } else {
-      // Si no hay archivo, simplemente crea la tarea
-      this.service.createTask(this.task).subscribe({
-        next: (response) => {
+    // Llamamos al servicio con la única llamada optimizada
+    this.service.createTask(formData).subscribe({
+      next: (response) => {
           console.log('Task created:', response);
           this.router.navigate(['/main-page']);
-        },
-        error: (error) => {
+      },
+      error: (error) => {
           console.error('Error creating the task:', error);
-        },
-      });
-    }
+      }
+    });
 
     console.log("TASK DATA :", this.task);
   }

@@ -107,14 +107,9 @@ export class DataService {
 
   //TASK//
 
-  //create Task with no Photo
-  createTask(task: Tarea): Observable<Tarea>{
-    return this.http.post<Tarea>(`${this.url}api/task/createTask`, task);
-  }
-
-  //create Task with Photo added
-  createTaskPhoto(formData: FormData): Observable<any>{
-    return this.http.post<Tarea>(`${this.url}api/task/createTaskPhoto`, formData);
+  //create Task
+  createTask(task: FormData): Observable<Tarea>{
+    return this.http.post<Tarea>(`${this.url}api/task/create`, task);
   }
 
   //Get Task by Id
@@ -122,7 +117,16 @@ export class DataService {
     return this.http.get<Tarea>(`${this.url}api/task/getById`, { params: {id} });
   }
 
-  editTask(tarea: Record<string, any>): Observable<any>{
-    return this.http.post<any>(`${this.url}api/task/edit`,tarea);
+  //Edit Task
+  editTaskWithChat(formData: FormData): Observable<any>{
+    return this.http.post<Tarea>(`${this.url}api/task/edit`, formData);
   }
+
+  // editTaskNoComments(tarea: Record<string, any>): Observable<any>{
+  //   return this.http.post<any>(`${this.url}api/task/editNoComments`,tarea);
+  // }
+
+  // editTaskWithChat(formData: FormData): Observable<any>{
+  //   return this.http.post<Tarea>(`${this.url}api/task/editWithChat`, formData);
+  // }
 }

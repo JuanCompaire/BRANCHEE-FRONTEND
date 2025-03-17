@@ -113,12 +113,42 @@
             </div>
           </div>
 
+          <!-- CHATS ARRAY -->
+          <div class="chats-container" *ngIf="taskDetails.chats.length > 0">
+            <div class="chat-box" *ngFor="let chat of taskDetails.chats">
+              <label for="basic-url" class="form-label">DATE CREATED</label>
+              <input type="text" class="form-control" style="background: transparent;color:azure; width: auto;" name="date_created" [(ngModel)]="chat.date_create_chat" readonly>
+
+              <label for="basic-url" class="form-label">USER CREATED</label>
+              <input type="text" class="form-control" style="background: transparent;color:azure; width: auto;" name="user_created" [(ngModel)]="chat.user_id_created_chat" readonly>
+
+              <label for="basic-url" class="form-label">DESCRIPTION</label>
+              <textarea class="form-control" style="background: transparent;color:azure;" name="description" [(ngModel)]="chat.descripcion"></textarea>
+
+              <label for="basic-url" class="form-label" *ngIf="chat.image !==''">IMAGE</label>
+              <img [src]="'http://localhost:8080/api/images/' + chat.image" alt="Imagen" *ngIf="chat.image !==''">
+            </div>
+          </div>
+
+          <!-- CREATE CHAT -->
+          <div class="col-12 wrapper" *ngIf="createCommentActivated">
+            <!--description-->
+            <label for="basic-url" class="form-label">Description</label>
+            <textarea class="form-control" style="background: transparent;color:azure;" name="description" [(ngModel)]="chat.descripcion"></textarea>
+            <!--photo-->
+            <label for="photo" class="form-label">Upload Photo</label>
+            <input type="file" class="form-control" id="photo" (change)="onFileSelected($event)" accept="image/*"/>
+          </div>
+
+
         </div>
       </div>
       <!--BUTTONS-->
       <div class="row">
         <!--CUANDO userIsBoss ES FALSO (Save y Back ocupan la mitad cada uno)-->
         <div  class="input-box col-12 d-flex justify-content-between">
+          <!--COMMENT-->
+          <button type="submit" class="btn btn-primary w-50 me-2" (click)="createComment()" *ngIf="!createCommentActivated">Create Comment</button>
           <!--SAVE-->
           <button type="submit" class="btn btn-primary w-50 me-2" (click)="editTask()">Save</button>
           <!--BACK-->
