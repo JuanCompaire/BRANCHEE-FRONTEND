@@ -1,0 +1,3 @@
+<div class="lightbox" *ngIf="isOpen" (click)="closeLightbox()">
+  <img [src]="imageUrl" class="lightbox-image" (click)="$event.stopPropagation()">
+</div>

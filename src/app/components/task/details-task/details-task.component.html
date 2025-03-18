@@ -64,7 +64,9 @@
           </div>
           <div class="col-6">
             <!--photo-->
-            <img style="height: 250px;width: 250px;" [src]="'http://localhost:8080/api/images/' + taskDetails.image" alt="Imagen">
+            <app-lightbox #lightbox></app-lightbox>
+
+            <img style="height: 250px;width: 250px;" [src]="'http://localhost:8080/api/images/' + taskDetails.image" alt="Imagen" (click)="lightbox.openLightbox('http://localhost:8080/api/images/' + taskDetails.image)">
           </div>
 
           <div class="col-12">
@@ -126,7 +128,7 @@
               <textarea class="form-control" style="background: transparent;color:azure;" name="description" [(ngModel)]="chat.descripcion"></textarea>
 
               <label for="basic-url" class="form-label" *ngIf="chat.image !==''">IMAGE</label>
-              <img [src]="'http://localhost:8080/api/images/' + chat.image" alt="Imagen" *ngIf="chat.image !==''">
+              <img [src]="'http://localhost:8080/api/images/' + chat.image" alt="Imagen" *ngIf="chat.image !==''" (click)="lightbox.openLightbox('http://localhost:8080/api/images/' + chat.image)">
             </div>
           </div>
 

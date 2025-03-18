@@ -14,6 +14,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ProyectDetailsComponent } from './components/proyect/proyect-details/proyect-details.component';
 import { CreateTaskComponent } from './components/task/create-task/create-task.component';
 import { DetailsTaskComponent } from './components/task/details-task/details-task.component';
+import { LightboxComponent } from './components/lightbox/lightbox.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DetailsTaskComponent } from './components/task/details-task/details-tas
     CreateProyectComponent,
     ProyectDetailsComponent,
     CreateTaskComponent,
-    DetailsTaskComponent
+    DetailsTaskComponent,
+    LightboxComponent
   ],
   imports: [
     BrowserModule,
