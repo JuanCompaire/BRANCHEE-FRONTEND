@@ -92,4 +92,8 @@ export class CreateProyectComponent implements OnInit {
       }
     });
   }
+
+  goBack() {
+    this.router.navigate(['main-page']);
+  }
 }
