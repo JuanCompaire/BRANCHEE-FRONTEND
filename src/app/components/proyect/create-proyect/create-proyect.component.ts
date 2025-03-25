@@ -65,12 +65,12 @@ export class CreateProyectComponent implements OnInit {
   createProyect(): void {
     //se le asigna la id del usario que crea el proyecto, a la id del jefe de proyecto
     this.proyect.id_boss = this.user.usuarioId;
-    this.proyect.date_create = "";
+    this.proyect.date_created = "";
     const requestBody = {
       proyectoId: -1,
       name_proyect: this.proyect.name_proyect,
       id_boss: this.proyect.id_boss,
-      dateCreate: this.proyect.date_create,
+      date_created: this.proyect.date_created,
       usuarios: this.selectedUserIds.map(user => ({
          usuarioId: user.usuarioId,
          username: user.username,

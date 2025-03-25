@@ -111,7 +111,7 @@ export class ProyectDetailsComponent implements OnInit {
       proyectoId: this.proyect_details.proyectoId,
       name_proyect: this.proyect_details.name_proyect,
       id_boss: this.proyect_details.id_boss,
-      dateCreate: this.proyect_details.date_create,
+      date_created: this.proyect_details.date_created,
       usuarios: this.selectedUsers.map(user => ({
          usuarioId: user.usuarioId,
          username: user.username,
