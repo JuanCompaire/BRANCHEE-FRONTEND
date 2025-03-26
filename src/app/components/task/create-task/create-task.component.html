@@ -2,112 +2,59 @@
 <html lang="en">
 <head>
   <title>BRANCHEE</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .dropdown-menu.show {
-      display: block;
-      max-height: 200px;
-      overflow-y: auto;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
     }
   </style>
 </head>
-<body>
-  <div class="wrapper">
+<body class="flex justify-center items-center min-h-screen bg-cover bg-center" style="background-image: url('../../../../assets/background_proyect_create.png');">
+  <div class="w-[800px] bg-white bg-opacity-20 backdrop-blur-md shadow-lg text-white rounded-lg p-8">
+    <p class="text-3xl font-extrabold text-center mb-6">TASK CREATE</p>
     <form>
-      <h1>TASK CREATE</h1>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <input type="text" class="w-full p-2 border border-white bg-transparent rounded-lg text-white placeholder-gray-300" placeholder="Task Name" [(ngModel)]="task.name_task" name="name">
+        </div>
+        <!-- PROJECT ASSIGNED -->
+        <div>
+          <input class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300" name="proyect" [value]="selectedProjectName" readonly (click)="toggleDropdown()" placeholder="Select Project">
+          <ul class="absolute bg-white text-black rounded-lg shadow-md mt-2 w-full max-h-48 overflow-y-auto" [class.hidden]="!isDropDownOpen">
+            <li *ngFor="let project of proyectList" class="p-2 cursor-pointer hover:bg-gray-200" (click)="selectProject(project)">{{ project.name_proyect }}</li>
+          </ul>
+        </div>
+        <!-- STATUS -->
+        <select [(ngModel)]="task.estado" name="status" class="w-full bg-transparent border border-white rounded-lg p-2 text-white appearance-none">
+          <option value="" disabled selected class="text-gray-300">SELECT A STATUS</option>
+          <option *ngFor="let option of status_options" [value]="option" class="bg-gray-700 text-white">{{ option }}</option>
+        </select>
+      </div>
 
-      <div >
-        <div class="row">
-          <div class="col-3">
-            <!--name-->
-            <label for="basic-url" class="form-label">Task Name<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <input type="text" class="form-control" style="background: transparent;color:azure;" name="name"  [(ngModel)]="task.name_task" >
-          </div>
-          <div class="col-3 ">
-            <!--proyect-->
-            <label for="basic-url" class="form-label">Proyect <i class="bi bi-journal-code" style="margin-left: 5px;"></i></label>
-            <input class="form-control" style="background: transparent; color: azure;" name="proyect" [value]="selectedProjectName" readonly (click)="toggleDropdown()"/>
-            <ul class="dropdown-menu" [class.show]="isDropDownOpen">
-              <li *ngFor="let proyect of proyectList">
-                <a
-                  class="dropdown-item"
-                  (click)="selectProject(proyect)"
-                >{{ proyect.name_proyect }}</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-3">
-            <!-- Status -->
-            <label for="status" class="form-label">
-              STATUS <i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i>
-            </label>
-            <select [(ngModel)]="task.estado" name="status" class="form-select">
-              <option *ngFor="let option of status_options" [value]="option">
-                {{ option }}
-              </option>
-            </select>
-          </div>
-
-          <div class="col-3">
-            <!-- Importance -->
-            <label for="importance" class="form-label">
-              IMPORTANCE <i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i>
-            </label>
-            <select [(ngModel)]="task.importancia" name="importance" class="form-select">
-              <option *ngFor="let option of import_options" [value]="option">
-                {{ option }}
-              </option>
-            </select>
-          </div>
-
-          <div class="col-12">
-            <!-- USERS ASSIGNED SELECT -->
-            <label for="user_assigned" class="form-label">
-              USERS ASSIGNED
-            </label>
-            <select  name="user_assigned" class="form-select" (change)="onUserSelected($event)">
-              <option *ngFor="let user of assignedUsers_options " [value]="user.usuarioId">
-                {{ user.username }}
-              </option>
-            </select>
-          </div>
-
-          <div class="users-container">
-            <div *ngFor="let user of assignedUsers" [class.show]="assignedUsers.length > 0">
-              <div class="user-bubble">
-                <img src="assets/user_icon.webp"alt="User Icon" class="user-icon">
-                <p class="user-info">{{ user.username }}</p>
-                <i class="bi bi-trash text-danger" (click)="removeUser(user.usuarioId)" style="cursor: pointer;"></i>
-              </div>
-            </div>
-          </div>
-
-          <br>
-
-          <div class="col-6">
-            <!--description-->
-            <label for="basic-url" class="form-label">Description<i class="bi bi-person-gear" style="margin-left: 5px;"></i></label>
-            <input type="email" class="form-control" style="background: transparent;color:azure;width:auto" name="description"  [(ngModel)]="task.descripcion"/>
-          </div>
-          <div class="col-6">
-            <!--photo-->
-            <label for="photo" class="form-label">Upload Photo</label>
-            <input type="file" class="form-control" id="photo" (change)="onFileSelected($event)" accept="image/*"/>
-          </div>
-
+      <div class="mt-4">
+        <select name="user_assigned" class="w-full bg-transparent border border-white rounded-lg p-2 text-white" (change)="onUserSelected($event)">
+          <option value="" disabled selected class="text-gray-300">ASSIGN A USER</option>
+          <option *ngFor="let user of assignedUsers_options" class="bg-gray-700 text-white" [value]="user.usuarioId">{{ user.username }}</option>
+        </select>
+      </div>
+      <div class="flex flex-wrap gap-4 mt-4">
+        <div *ngFor="let user of assignedUsers" class="flex items-center bg-gray-700 p-2 rounded-lg">
+          <img src="assets/user_icon.webp" alt="User Icon" class="w-8 h-8 rounded-full mr-2">
+          <p class="mr-2">{{ user.username }}</p>
+          <i class="bi bi-trash text-red-500 cursor-pointer" (click)="removeUser(user.usuarioId)"></i>
         </div>
       </div>
-      <!--BUTTONS-->
-      <div class="row">
-        <!--CUANDO userIsBoss ES FALSO (Save y Back ocupan la mitad cada uno)-->
-        <div  class="input-box col-12 d-flex justify-content-between">
-          <!--SAVE-->
-          <button type="submit" class="btn btn-primary w-50 me-2" (click)="createTask()">Create</button>
-          <!--BACK-->
-          <button type="button" class="btn btn-secondary w-50 ms-2" (click)="goBack()">Back</button>
-        </div>
-
+      <!-- DESCRIPTION -->
+      <div class="mt-4">
+        <textarea class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300" name="description" [(ngModel)]="task.descripcion" placeholder="Description"></textarea>
+      </div>
+      <div class="mt-4">
+        <input type="file" class="w-full border border-white rounded-lg p-2 bg-transparent text-white" id="photo" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+      <div class="mt-6 flex justify-between">
+        <button type="submit" class="w-1/2 bg-blue-500 text-white p-3 rounded-lg mr-2 transition duration-300 hover:scale-105 hover:bg-blue-600" (click)="createTask()">Create</button>
+        <button type="button" class="w-1/2 bg-gray-500 text-white p-3 rounded-lg ml-2 transition duration-300 hover:scale-105 hover:bg-gray-600" (click)="goBack()">Back</button>
       </div>
     </form>
   </div>

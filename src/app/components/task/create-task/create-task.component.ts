@@ -21,8 +21,7 @@ export class CreateTaskComponent implements OnInit{
   isDropDownOpen = false;
   selectedFile: File | null = null;
   selectedProjectName: string = '';
-  status_options = ["OPEN","WORKING ON IT","CLOSED"];
-  import_options = ["LOW","MEDIUM","HIGH"];
+  status_options = ["WORKING ON IT","HIGH IMPORTANCE","CLOSED"];
   assignedUsers: { usuarioId: number; username: string; email: string }[] = [];
   assignedUsers_options: { usuarioId: number; username: string; email: string }[] = [];
 
@@ -90,6 +89,7 @@ export class CreateTaskComponent implements OnInit{
   }
 
   selectProject(proyect: Proyecto) {
+    this.assignedUsers = [];
     console.log("EL proyect que entra en el selectProject es : ", proyect);
     this.task.id_proyecto = proyect.proyectoId;
     this.selectedProjectName = proyect.name_proyect; // Guarda el nombre del proyecto seleccionado
