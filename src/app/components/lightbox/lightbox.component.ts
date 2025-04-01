@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-lightbox',
@@ -8,16 +8,28 @@ import { Component, Input } from '@angular/core';
 export class LightboxComponent {
 
   @Input() imageUrl: string = '';
-  isOpen: boolean = false;
+  @Output() close = new EventEmitter<void>();
 
-  openLightbox(image: string) {
-    console.log("se ha hecho el click en openLightbox");
-    this.imageUrl = image;
-    this.isOpen = true;
+  // Tamaño fijo para todas las imágenes
+  readonly targetWidth = 1200;
+  readonly targetHeight = 800;
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    this.closeLightbox();
   }
 
   closeLightbox() {
-    this.isOpen = false;
+    this.close.emit();
   }
 
+  getImageStyle() {
+    return {
+      'max-width': '100%',
+      'max-height': '100%',
+      'object-fit': 'contain',
+      'display': 'block',
+      'margin': 'auto'
+    };
+  }
 }

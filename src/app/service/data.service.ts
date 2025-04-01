@@ -105,6 +105,17 @@ export class DataService {
     return this.http.get<Proyecto>(`${this.url}api/proyect/getById`, { params: {id} });
   }
 
+  // Get Project Name By Id
+  getProyectNameById(id: number): Observable<string> {
+    return this.http.get(
+      `${this.url}api/proyect/getNameById`,
+      {
+        params: { id: id },
+        responseType: 'text' as const
+      }
+    );
+  }
+
   //TASK//
 
   //create Task

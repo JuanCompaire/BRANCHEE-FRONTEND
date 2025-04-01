@@ -2,163 +2,193 @@
 <html lang="en">
 <head>
   <title>BRANCHEE</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .dropdown-menu.show {
-      display: block;
-      max-height: 200px;
-      overflow-y: auto;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    body.lightbox-open {
+      overflow: hidden;
     }
   </style>
 </head>
-<body>
-  <div class="wrapper">
-    <form>
-      <h1>TASK DETAILS</h1>
+<body class="flex justify-center items-center min-h-screen bg-cover bg-center" style="background-image: url('../../../../assets/background_proyect_create.png');">
+  <!-- Contenedor principal -->
+  <div class="w-full">
+    <!-- Contenedor del formulario -->
+    <div class="w-full max-w-5xl bg-white bg-opacity-20 backdrop-blur-md shadow-lg text-white rounded-lg p-8 px-4 mt-8 mx-auto">
 
-      <div >
-        <div class="row">
-          <div class="col-3">
-            <!--name-->
-            <label for="basic-url" class="form-label">Task Name<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <input type="text" class="form-control" style="background: transparent;color:azure;" name="name"  [(ngModel)]="taskDetails.name_task" readonly>
-          </div>
-          <div class="col-3 ">
-            <!--proyect-->
-            <label for="basic-url" class="form-label">Proyect<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <input type="text" class="form-control" style="background: transparent;color:azure;" name="proyect"  [(ngModel)]="taskDetails.id_proyecto" readonly>
+      <div class="text-5xl font-mono font-extrabold text-center mb-10">
+        {{taskDetails.name_task}}<span class="text-sm text-slate-300 inline">#{{taskDetails.tareaId}}</span>
+      </div>
+
+      <form>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Project -->
+          <div>
+            <label class="block text-sm text-center">PROJECT</label>
+            <input class="w-full bg-transparent border text-center border-white rounded-lg p-2 text-white placeholder-gray-300" name="project" [(ngModel)]="name_project" readonly >
           </div>
 
-          <div class="col-3">
-            <!-- Status -->
-            <label for="status" class="form-label">
-              STATUS <i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i>
-            </label>
-            <select [(ngModel)]="taskDetails.estado" name="status" class="form-select">
-              <option *ngFor="let option of status_options" [value]="option">
-                {{ option }}
-              </option>
+          <!-- Status -->
+          <div>
+            <label class="block text-sm text-center">STATUS</label>
+            <select [(ngModel)]="taskDetails.estado" name="status" class="w-full bg-transparent border border-white rounded-lg p-2 text-white ">
+              <option value="" disabled selected class="text-gray-300 ">Select Status...</option>
+              <option *ngFor="let option of status_options" [value]="option" class="bg-gray-700 text-white">{{ option }}</option>
             </select>
           </div>
+        </div>
 
-          <div class="col-3">
-            <!-- Importance -->
-            <label for="importance" class="form-label">
-              IMPORTANCE <i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i>
-            </label>
-            <select [(ngModel)]="taskDetails.importancia" name="importance" class="form-select">
-              <option *ngFor="let option of import_options" [value]="option">
-                {{ option }}
-              </option>
-            </select>
+        <!--ASSIGN USER-->
+        <div class="mt-4">
+          <select name="user_assigned" class="w-full bg-transparent border border-white rounded-lg p-2 text-white" (change)="onUserSelected($event)">
+            <option value="" disabled selected class="text-gray-300">Assign User...</option>
+            <option *ngFor="let user of assignedUsers_options" class="bg-gray-700 text-white" [value]="user.usuarioId">{{ user.username }}</option>
+          </select>
+        </div>
+
+        <!--USERS ASSIGNED-->
+        <label class="block text-sm mt-2">USERS ASSIGNED</label>
+        <div class="flex flex-wrap gap-4 mt-2">
+          <div *ngFor="let user of assignedUsers" class="flex items-center bg-gray-700 p-2 rounded-lg">
+            <img src="assets/user_icon.webp" alt="User Icon" class="w-8 h-8 rounded-full mr-2">
+            <p class="mr-2">{{ user.username }}</p>
+            <i class="bi bi-trash text-red-500 cursor-pointer" (click)="removeUser(user.usuarioId)"></i>
           </div>
+        </div>
 
-          <br>
+        <!-- Description -->
+        <div class="mt-2">
+          <label class="block text-sm mb-2">DESCRIPTION</label>
+          <textarea class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300"
+                      name="description" [(ngModel)]="taskDetails.descripcion"
+                      placeholder="Description"></textarea>
+        </div>
 
-          <div class="col-6">
-            <!--description-->
-            <label for="basic-url" class="form-label">Description<i class="bi bi-person-gear" style="margin-left: 5px;"></i></label>
-            <!-- <input type="textarea" class="form-control" style="background: transparent;color:azure;width:auto" name="description"  [(ngModel)]="taskDetails.descripcion"/> -->
-             <textarea class="form-control" style="background: transparent;color:azure;width:auto" name="description" [(ngModel)]="taskDetails.descripcion"></textarea>
+        <!-- Photo -->
+        <div class="col-span-3 flex flex-col items-center ">
+          <label class="block text-sm mb-2">PHOTO TASK</label>
+          <img class="w-72 h-72 object-cover cursor-pointer transition duration-300 hover:scale-105"
+               [src]="'http://localhost:8080/api/images/' + taskDetails.image"
+               alt="Imagen"
+               (click)="openLightbox('http://localhost:8080/api/images/' + taskDetails.image)">
+        </div>
+
+        <!-- BUTON CREATE CHAT-->
+        <div class="flex flex-wrap gap-4 mt-2" *ngIf="!createCommentActivated">
+          <div class="flex items-center bg-gray-700 p-2 rounded-lg text-white transition duration-300 hover:scale-105 hover:bg-green-700" (click)="createComment()">
+            CREATE CHAT
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 hover:scale-105 transition-transform">
+              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+            </svg>
           </div>
-          <div class="col-6">
-            <!--photo-->
-            <app-lightbox #lightbox></app-lightbox>
+        </div>
 
-            <img style="height: 250px;width: 250px;" [src]="'http://localhost:8080/api/images/' + taskDetails.image" alt="Imagen" (click)="lightbox.openLightbox('http://localhost:8080/api/images/' + taskDetails.image)">
+        <!-- BUTON SEE CHATS-->
+        <div class="flex flex-wrap gap-4 mt-2" *ngIf="!seeChats">
+          <div class="flex items-center bg-gray-700 p-2 rounded-lg text-white transition duration-300 hover:scale-105 hover:bg-indigo-500" (click)="seeAllChats()">
+            CHATS
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 hover:scale-105 transition-transform">
+              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+            </svg>
           </div>
+        </div>
 
-          <div class="col-12">
-            <!-- USERS ASSIGNED SELECT -->
-            <label for="user_assigned" class="form-label">
-              USERS ASSIGNED
-            </label>
-
-            <select  name="user_assigned" class="form-select" (change)="onUserSelected($event)">
-              <option *ngFor="let user of assignedUsers_options " [value]="user.usuarioId">
-                {{ user.username }}
-              </option>
-            </select>
+        <!-- BUTON SEE LESS CHATS-->
+        <div class="flex flex-wrap gap-4 mt-2" *ngIf="seeChats">
+          <div class="flex items-center bg-gray-700 p-2 rounded-lg text-white transition duration-300 hover:scale-105 hover:bg-indigo-500" (click)="dontSeeAllChats()">
+            CHATS
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clip-rule="evenodd" />
+            </svg>
           </div>
+        </div>
 
-          <div class="users-container">
-            <div *ngFor="let user of assignedUsers" [class.show]="assignedUsers.length > 0">
-              <div class="user-bubble">
-                <img src="assets/user_icon.webp"alt="User Icon" class="user-icon">
-                <p class="user-info">{{ user.username }}</p>
-                <i class="bi bi-trash text-danger" (click)="removeUser(user.usuarioId)" style="cursor: pointer;"></i>
+        <!-- BUTON CANCEL CREATE CHAT-->
+        <div class="flex flex-wrap gap-4 mt-2" *ngIf="createCommentActivated">
+          <div class="flex items-center bg-gray-700 p-2 rounded-lg text-white transition duration-300 hover:scale-105 hover:bg-red-500" (click)="cancelCreateComment()">
+            CANCEL CREATE CHAT
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- CREATE CHAT FORM-->
+        <div class="rounded-lg p-2 backdrop-blur-md shadow-lg mt-3" *ngIf="createCommentActivated">
+          <!-- CHAT DESCRIPCTION -->
+          <label class="block text-sm mb-2">DESCRICPTION</label>
+          <textarea class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300" name="description" [(ngModel)]="chat.descripcion" placeholder="Description"></textarea>
+
+          <div class="col-span-full">
+            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+              <div class="text-center">
+                <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                  <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                </svg>
+                <div class="mt-4 flex text-sm/6 text-gray-600">
+                  <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500">
+                    <span>Upload a file or drag and drop</span>
+                    <input id="file-upload" name="file-upload" type="file" class="sr-only" (change)="onFileSelected($event)" accept="image/*">
+                  </label>
+                </div>
+                <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
               </div>
             </div>
           </div>
-
-          <div class="col-6">
-            <!--last update date-->
-            <label for="basic-url" class="form-label">Last Update Date<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <input type="text" class="form-control" style="background: transparent;color:azure; width: auto;" name="last_update_date"  [(ngModel)]="taskDetails.date_last_update" readonly>
-          </div>
-
-          <br>
-
-          <div class="col-6">
-            <!--created task date-->
-            <label for="basic-url" class="form-label">Create Task Date<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <input type="text" class="form-control" style="background: transparent;color:azure; width: auto;" name="create_task_date"  [(ngModel)]="taskDetails.date_create" readonly>
-          </div>
-
-          <div class="col-3">
-            <!--user created task-->
-            <label for="basic-url" class="form-label">User created task<i class="bi bi-journal-bookmark" style="margin-left: 5px;"></i></label>
-            <div class="user-bubble">
-              <img src="assets/user_icon.webp"alt="User Icon" class="user-icon">
-              <p class="user-info">{{user_created_task.username }}</p>
-            </div>
-          </div>
-
-          <!-- CHATS ARRAY -->
-          <div class="chats-container" *ngIf="taskDetails.chats.length > 0">
-            <div class="chat-box" *ngFor="let chat of taskDetails.chats">
-              <label for="basic-url" class="form-label">DATE CREATED</label>
-              <input type="text" class="form-control" style="background: transparent;color:azure; width: auto;" name="date_created" [(ngModel)]="chat.date_create_chat" readonly>
-
-              <label for="basic-url" class="form-label">USER CREATED</label>
-              <input type="text" class="form-control" style="background: transparent;color:azure; width: auto;" name="user_created" [(ngModel)]="chat.user_id_created_chat" readonly>
-
-              <label for="basic-url" class="form-label">DESCRIPTION</label>
-              <textarea class="form-control" style="background: transparent;color:azure;" name="description" [(ngModel)]="chat.descripcion"></textarea>
-
-              <label for="basic-url" class="form-label" *ngIf="chat.image !==''">IMAGE</label>
-              <img [src]="'http://localhost:8080/api/images/' + chat.image" alt="Imagen" *ngIf="chat.image !==''" (click)="lightbox.openLightbox('http://localhost:8080/api/images/' + chat.image)">
-            </div>
-          </div>
-
-          <!-- CREATE CHAT -->
-          <div class="col-12 wrapper" *ngIf="createCommentActivated">
-            <!--description-->
-            <label for="basic-url" class="form-label">Description</label>
-            <textarea class="form-control" style="background: transparent;color:azure;" name="description" [(ngModel)]="chat.descripcion"></textarea>
-            <!--photo-->
-            <label for="photo" class="form-label">Upload Photo</label>
-            <input type="file" class="form-control" id="photo" (change)="onFileSelected($event)" accept="image/*"/>
-          </div>
-
-
-        </div>
-      </div>
-      <!--BUTTONS-->
-      <div class="row">
-        <!--CUANDO userIsBoss ES FALSO (Save y Back ocupan la mitad cada uno)-->
-        <div  class="input-box col-12 d-flex justify-content-between">
-          <!--COMMENT-->
-          <button type="submit" class="btn btn-primary w-50 me-2" (click)="createComment()" *ngIf="!createCommentActivated">Create Comment</button>
-          <!--SAVE-->
-          <button type="submit" class="btn btn-primary w-50 me-2" (click)="editTask()">Save</button>
-          <!--BACK-->
-          <button type="button" class="btn btn-secondary w-50 ms-2" (click)="goBack()">Back</button>
         </div>
 
-      </div>
-    </form>
+        <!-- CHATS ARRAY -->
+        <div class="rounded-lg p-2 backdrop-blur-md shadow-lg mt-3 " *ngIf="taskDetails.chats.length > 0 && seeChats">
+          <div *ngFor="let chat_index of taskDetails.chats" class="bg-gray-500 rounded-lg mb-5">
+            <!-- USER AND DATE INFO CHAT -->
+            <div class="flex items-center justify-between bg-gray-700 p-2 rounded-lg ">
+              <div class="flex items-center">
+                <img src="assets/user_icon.webp" alt="User Icon" class="w-8 h-8 rounded-full mr-2">
+                <span>{{ getUsernameByUserId(chat_index.user_id_created_chat) }}</span>
+              </div>
+              <span class="text-gray-400 text-sm">{{ chat_index.date_create_chat }}</span>
+            </div>
+
+            <!-- DESCRIPTION AND PHOTO CAHT -->
+            <div class="rounded-lg p-2 backdrop-blur-md shadow-lg mt-3 mb-3">
+              <div class="flex flex-col md:flex-row gap-4">
+                <!-- Descripción (ocupará 9 columnas cuando haya imagen, 12 cuando no) -->
+                <div [class]="chat_index.image ? 'md:w-9/12' : 'w-full'">
+                  <label class="block text-sm mb-2">DESCRIPTION</label>
+                  <textarea class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300"
+                            [name]="'description_' + chat_index.chatId"
+                            [value]="chat_index.descripcion"
+                            placeholder="Description" readonly></textarea>
+                </div>
+
+                <!-- Imagen (ocupará 3 columnas cuando exista) -->
+                <div *ngIf="chat_index.image" class="md:w-3/12 flex items-center justify-center transition duration-300 hover:scale-105">
+                  <img class="max-w-full max-h-72 object-cover cursor-pointer rounded-lg"
+                      [src]="'http://localhost:8080/api/images/' + chat_index.image"
+                      alt="Imagen"
+                      (click)="openLightbox('http://localhost:8080/api/images/' + chat_index.image)">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="mt-6 flex justify-between">
+          <button type="button" class="w-1/2 bg-blue-500 text-white p-3 rounded-lg mr-2 transition duration-300 hover:scale-105 hover:bg-blue-600" (click)="editTask()">Save</button>
+          <button type="button" class="w-1/2 bg-gray-500 text-white p-3 rounded-lg ml-2 transition duration-300 hover:scale-105 hover:bg-gray-600" (click)="goBack()">Back</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lightbox FUERA del contenedor del formulario -->
+    <app-lightbox *ngIf="selectedImage"
+                [imageUrl]="selectedImage"
+                (close)="closeLightbox()">
+    </app-lightbox>
   </div>
 </body>
 </html>

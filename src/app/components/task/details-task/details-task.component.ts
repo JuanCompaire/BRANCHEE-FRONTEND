@@ -22,10 +22,15 @@ export class DetailsTaskComponent implements OnInit{
   status_options = ["OPEN","WORKING ON IT","CLOSED"];
   import_options = ["LOW","MEDIUM","HIGH"];
   assignedUsers: { usuarioId: number; username: string; email: string }[] = [];
+  // this is the list os users in the proyect, which they can see all the task in their project
+  //so we load in an array and we recibe the id, and we give back the full user by searching it in this array
   assignedUsers_options: { usuarioId: number; username: string; email: string }[] = [];
   createCommentActivated = false;
   selectedFile: File | null = null;
   chat = new Chat();
+  selectedImage: string | null = null;
+  name_project: String = '';
+  seeChats : Boolean = false;
 
   constructor(private route: ActivatedRoute, private service: DataService, private router: Router) {}
 
@@ -50,17 +55,20 @@ export class DetailsTaskComponent implements OnInit{
 
           return forkJoin({
             user: this.service.getUser(task.user_id_created_task),
-            users_posibilities_assigned : this.service.getUsersByProyectId(task.id_proyecto)
+            users_posibilities_assigned : this.service.getUsersByProyectId(task.id_proyecto),
+            name_proyect: this.service.getProyectNameById(task.id_proyecto)
           }).pipe(
-            map(({user,users_posibilities_assigned}) => ({ task, user, users_posibilities_assigned }))
+            map(({user,users_posibilities_assigned,name_proyect}) => ({ task, user, users_posibilities_assigned,name_proyect}))
           );
         })
       ).subscribe({
-        next: ({ user, users_posibilities_assigned }) => {
+        next: ({ user, users_posibilities_assigned,name_proyect }) => {
           this.user_created_task = user;
           console.log("Usuario que creó la tarea:", this.user_created_task);
           this.assignedUsers_options = users_posibilities_assigned;
-          console.log("Usuarios para elegir asignar la tarea", this.assignedUsers_options);
+          console.log("Usuarios del proytecto", this.assignedUsers_options);
+          this.name_project = name_proyect;
+          console.log("Nombre del proyecto : ",this.name_project);
         },
         error: (error) => {
           console.error("Error al obtener datos:", error);
@@ -77,7 +85,17 @@ export class DetailsTaskComponent implements OnInit{
       if(this.createCommentActivated ||this.chat.descripcion!=='' ){
         this.chat.id_tarea = this.taskDetails.tareaId;
         this.chat.user_id_created_chat = this.user.usuarioId;
-        this.chat.date_create_chat = new Date().toDateString();
+        const date_new_chat = new Date();
+        const formattedDate = date_new_chat.toLocaleString('es-ES', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        }).replace(',', '');
+        this.chat.date_create_chat = formattedDate;
         console.log(this.chat);
         this.taskDetails.chats.push(this.chat);
         if(this.selectedFile){
@@ -169,6 +187,34 @@ export class DetailsTaskComponent implements OnInit{
     createComment(){
       this.createCommentActivated = true;
       console.log("El createCommentActivated es : ",this.createCommentActivated);
+    }
+
+    cancelCreateComment(){
+      this.chat = new Chat();
+      this.createCommentActivated = false;
+      console.log("El createCommentActivated es : ",this.createCommentActivated);
+    }
+
+    seeAllChats(){
+      this.seeChats = true;
+    }
+
+    dontSeeAllChats(){
+      this.seeChats = false;
+    }
+
+    openLightbox(image: string) {
+      this.selectedImage = image;
+      document.body.classList.add('lightbox-open');
+    }
+
+    closeLightbox() {
+      this.selectedImage = null;
+      document.body.classList.remove('lightbox-open');
+    }
+
+    getUsernameByUserId(id: number): string {
+      return this.assignedUsers_options.find(user => user.usuarioId === id )?.username || 'Desconocido';
     }
 
     goBack() {

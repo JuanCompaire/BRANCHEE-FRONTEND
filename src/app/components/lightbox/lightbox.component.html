@@ -1,3 +1,26 @@
-<div class="lightbox" *ngIf="isOpen" (click)="closeLightbox()">
-  <img [src]="imageUrl" class="lightbox-image" (click)="$event.stopPropagation()">
+<!-- lightbox.component.html -->
+<div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-90 p-4 backdrop-blur-sm"
+     (click)="closeLightbox()">
+
+  <!-- Contenedor de imagen con tamaño máximo -->
+  <div class="relative w-full h-full flex items-center justify-center"
+       (click)="$event.stopPropagation()">
+
+    <!-- Botón de cerrar -->
+    <button class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-10 p-2 bg-black bg-opacity-50 rounded-full"
+            (click)="closeLightbox()"
+            aria-label="Cerrar lightbox">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Imagen con tamaño controlado -->
+    <div class="max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+      <img [src]="imageUrl"
+           alt="Imagen ampliada"
+           class="max-w-full max-h-full object-contain"
+           style="box-shadow: 0 0 20px rgba(0,0,0,0.5);">
+    </div>
+  </div>
 </div>
