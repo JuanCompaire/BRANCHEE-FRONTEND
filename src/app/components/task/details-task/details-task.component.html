@@ -54,7 +54,7 @@
         <div class="flex flex-wrap gap-4 mt-2">
           <div *ngFor="let user of assignedUsers" class="flex items-center bg-gray-700 p-2 rounded-lg">
             <img src="assets/user_icon.webp" alt="User Icon" class="w-8 h-8 rounded-full mr-2">
-            <p class="mr-2">{{ user.username }}</p>
+            {{user.username}}
             <i class="bi bi-trash text-red-500 cursor-pointer" (click)="removeUser(user.usuarioId)"></i>
           </div>
         </div>
@@ -68,7 +68,7 @@
         </div>
 
         <!-- Photo -->
-        <div class="col-span-3 flex flex-col items-center ">
+        <div class="col-span-3 flex flex-col items-center " *ngIf="taskDetails.image !=''">
           <label class="block text-sm mb-2">PHOTO TASK</label>
           <img class="w-72 h-72 object-cover cursor-pointer transition duration-300 hover:scale-105"
                [src]="'http://localhost:8080/api/images/' + taskDetails.image"

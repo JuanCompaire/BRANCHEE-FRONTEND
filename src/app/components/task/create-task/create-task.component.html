@@ -12,7 +12,7 @@
 </head>
 <body class="flex justify-center items-center min-h-screen bg-cover bg-center" style="background-image: url('../../../../assets/background_proyect_create.png');">
   <div class="w-full max-w-5xl bg-white bg-opacity-20 backdrop-blur-md shadow-lg text-white rounded-lg p-8 px-4 mt-8">
-    <p class="text-3xl font-extrabold text-center mb-6">TASK CREATE</p>
+    <p class="text-3xl font-extrabold text-center mb-6">CREATE TASK</p>
     <form>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
@@ -26,7 +26,7 @@
           </ul>
         </div>
         <!-- STATUS -->
-        <select [(ngModel)]="task.estado" name="status" class="w-full bg-transparent border border-white rounded-lg p-2 text-white appearance-none">
+        <select [(ngModel)]="task.estado" name="status" class="w-full bg-transparent border border-white rounded-lg p-2 text-white ">
           <option value="" disabled selected class="text-gray-300">SELECT A STATUS</option>
           <option *ngFor="let option of status_options" [value]="option" class="bg-gray-700 text-white">{{ option }}</option>
         </select>
@@ -41,7 +41,7 @@
       <div class="flex flex-wrap gap-4 mt-4">
         <div *ngFor="let user of assignedUsers" class="flex items-center bg-gray-700 p-2 rounded-lg">
           <img src="assets/user_icon.webp" alt="User Icon" class="w-8 h-8 rounded-full mr-2">
-          <p class="mr-2">{{ user.username }}</p>
+          {{ user.username }}
           <i class="bi bi-trash text-red-500 cursor-pointer" (click)="removeUser(user.usuarioId)"></i>
         </div>
       </div>
@@ -49,8 +49,21 @@
       <div class="mt-4">
         <textarea class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300" name="description" [(ngModel)]="task.descripcion" placeholder="Description"></textarea>
       </div>
-      <div class="mt-4">
-        <input type="file" class="w-full border border-white rounded-lg p-2 bg-transparent text-white" id="photo" (change)="onFileSelected($event)" accept="image/*">
+      <div class="col-span-full ">
+        <div class="mt-2 flex justify-center backdrop-blur-md rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+          <div class="text-center">
+            <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+              <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+            </svg>
+            <div class="mt-4 flex text-sm/6 text-gray-600">
+              <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500">
+                <span>Upload a file or drag and drop</span>
+                <input id="file-upload" name="file-upload" type="file" class="sr-only" (change)="onFileSelected($event)" accept="image/*">
+              </label>
+            </div>
+            <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+          </div>
+        </div>
       </div>
       <div class="mt-6 flex justify-between">
         <button type="submit" class="w-1/2 bg-blue-500 text-white p-3 rounded-lg mr-2 transition duration-300 hover:scale-105 hover:bg-blue-600" (click)="createTask()">Create</button>

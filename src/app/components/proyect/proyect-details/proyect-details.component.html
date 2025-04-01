@@ -3,77 +3,114 @@
 <head>
   <title>BRANCHEE</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
 </head>
 <body class="flex justify-center items-center min-h-screen bg-cover bg-center" style="background-image: url('../../../../assets/background_proyect_create.png');">
-  <div class="w-[600px] bg-white bg-opacity-20 backdrop-blur-md shadow-lg text-white rounded-lg p-8 font-mono ">
+  <div class="w-full max-w-5xl bg-white bg-opacity-20 backdrop-blur-md shadow-lg text-white rounded-lg p-8 px-4 mt-8">
 
-    <div class="text-5xl font-mono font-extrabold text-center mb-10">
-      {{proyect_details.name_proyect}}<span class="text-sm text-slate-300 inline">#{{proyect_details.proyectoId}}</span>
+    <div class="text-4xl font-extrabold text-center mb-6">
+      {{proyect_details.name_proyect}}<span class="text-sm text-slate-300 ml-2">#{{proyect_details.proyectoId}}</span>
     </div>
 
     <form>
-      <div class="grid grid-cols-2 gap-4">
-
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Project Boss -->
         <div>
-          <label class="block text-sm text-center">Project Boss</label>
-          <div class="flex  bg-gray-700 p-2 rounded-lg">
-            <img src="assets/user_icon.webp" alt="User Icon" class="w-10 h-10 rounded-full ">
-            <p class="ml-2">{{ user_boss.username }}</p>
+          <label class="block text-sm mb-2">PROJECT BOSS</label>
+          <div class="flex items-center bg-gray-700 p-3 rounded-lg border border-white">
+            <img src="assets/user_icon.webp" alt="User Icon" class="w-10 h-10 rounded-full mr-3">
+            {{ user_boss.username }}
           </div>
         </div>
 
+        <!-- Created Date -->
         <div>
-          <label class="block text-sm text-center">Created Date</label>
-          <div class="p-2 rounded-lg border">
-            <p>
-              {{proyect_details.date_created}}
-            </p>
+          <label class="block text-sm mb-2">CREATED DATE</label>
+          <div class="bg-transparent border border-white p-3 rounded-lg">
+            <p>{{proyect_details.date_created}}</p>
           </div>
         </div>
       </div>
 
-      <div class="mt-4" *ngIf="userIsBoss">
-        <label class="block text-sm">Search User</label>
-        <input type="text" #userSearch class="w-full bg-transparent border border-white rounded-lg p-2 text-white"
-          placeholder="Search user" (keyup)="searchUser($event)" required>
+      <!-- User Search (only for boss) -->
+      <div class="mb-6" *ngIf="userIsBoss">
+        <label class="block text-sm mb-2">ADD USER</label>
+        <input type="text" #userSearch
+               class="w-full bg-transparent border border-white rounded-lg p-3 text-white placeholder-gray-300"
+               placeholder="SEARCH USER"
+               (keyup)="searchUser($event)"
+               required>
         <ul class="mt-2 bg-white bg-opacity-20 backdrop-blur-md rounded-lg overflow-y-auto max-h-40"
-          [class.show]="user_list.length > 0">
-          <li *ngFor="let user of user_list" class="p-2 hover:bg-gray-600 cursor-pointer" (click)="addUser(user,userSearch)">
+            [class.hidden]="user_list.length === 0">
+          <li *ngFor="let user of user_list"
+              class="p-3 hover:bg-gray-600 cursor-pointer border-b border-white/10 last:border-0"
+              (click)="addUser(user,userSearch)">
             {{ user.username }}
           </li>
         </ul>
       </div>
 
-
-      <label class="block text-sm mt-4">USERS LIST</label>
-      <div class="flex flex-wrap gap-2">
-        <div *ngFor="let user of selectedUsers" class="flex items-center bg-gray-700 p-2 rounded-lg">
-          <img src="assets/user_icon.webp" alt="User Icon" class="w-6 h-6 rounded-full">
-          <p class="ml-2">{{ user.username }}</p>
-          <i class="bi bi-trash3-fill text-red-500 cursor-pointer ml-2" (click)="removeUser(user.usuarioId)" *ngIf="userIsBoss"></i>
+      <!-- Users List -->
+      <label class="block text-sm mb-2" *ngIf="selectedUsers.length > 0">USERS LIST</label>
+      <div class="flex flex-wrap gap-3 mb-8">
+        <div *ngFor="let user of selectedUsers"
+             class="flex items-center bg-gray-700 p-3 rounded-lg border border-white/30">
+          <img src="assets/user_icon.webp" alt="User Icon" class="w-8 h-8 rounded-full mr-3">
+          {{ user.username }}
+          <i class="bi bi-trash text-red-500 cursor-pointer ml-3"
+             (click)="removeUser(user.usuarioId)"
+             *ngIf="userIsBoss"></i>
         </div>
       </div>
 
-      <label class="block text-sm mt-4" *ngIf="proyect_details.tareas.length != null && proyect_details.tareas.length != 0 ">TASKS LIST</label>
-      <div class="flex flex-wrap gap-2">
+      <!-- Tasks List -->
+      <label class="block text-sm mb-2" *ngIf="proyect_details.tareas.length > 0">TASKS LIST</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
         <div *ngFor="let task of proyect_details.tareas"
-          class="p-2 rounded-lg border" [ngStyle]="{'border-color': getBorderColor(task.estado)}">
-          <p class="cursor-pointer" (click)="toTaskDetailsPage(task.tareaId)">{{ task.name_task }}</p>
+             class="p-3 rounded-lg border cursor-pointer hover:bg-white/10 transition-colors"
+             [ngStyle]="{'border-color': getBorderColor(task.estado)}"
+             (click)="toTaskDetailsPage(task.tareaId)">
+          <p>{{ task.name_task }}</p>
+          <p class="text-xs text-gray-300 mt-1">{{ task.estado }}</p>
         </div>
       </div>
 
-      <div class="mt-6">
-        <div *ngIf="!userIsBoss" class="flex gap-2">
-          <button type="submit" class="btn btn-primary w-1/2 bg-blue-500 p-2 rounded-lg transition delay-150 duration -300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-blue-600" (click)="editProyect()">Save</button>
-          <button type="button" class="btn btn-primary w-1/2 bg-gray-500 p-2 rounded-lg transition delay-150 duration -300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-gray-500" (click)="goBack()">Back</button>
-        </div>
+      <!-- Buttons for Non-Boss -->
+      <div *ngIf="!userIsBoss" class="flex gap-4">
+        <button type="button"
+                class="w-1/2 bg-blue-500 text-white p-3 rounded-lg transition duration-300 hover:scale-105 hover:bg-blue-600"
+                (click)="editProyect()">
+          SAVE
+        </button>
+        <button type="button"
+                class="w-1/2 bg-gray-500 text-white p-3 rounded-lg transition duration-300 hover:scale-105 hover:bg-gray-600"
+                (click)="goBack()">
+          BACK
+        </button>
+      </div>
 
-        <div *ngIf="userIsBoss">
-          <button type="submit" class="w-full bg-blue-500 p-2 rounded-lg mb-2 transition delay-150 duration -300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-blue-600" (click)="editProyect()">Save</button>
-          <div class="flex gap-2">
-            <button type="submit" class="w-1/2 bg-red-700 p-2 rounded-lg text-white transition delay-150 duration -300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-red-800">Delete</button>
-            <button type="button" class="w-1/2 bg-gray-500 p-2 rounded-lg text-white transition delay-150 duration -300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-gray-500" (click)="goBack()">Back</button>
-          </div>
+      <!-- Buttons for Boss -->
+      <div *ngIf="userIsBoss" class="space-y-4">
+        <button type="button"
+                class="w-full bg-blue-500 text-white p-3 rounded-lg transition duration-300 hover:scale-105 hover:bg-blue-600"
+                (click)="editProyect()">
+          SAVE CHANGES
+        </button>
+        <div class="flex gap-4">
+          <button type="button"
+                  class="w-1/2 bg-red-700 text-white p-3 rounded-lg transition duration-300 hover:scale-105 hover:bg-red-800">
+            DELETE PROJECT
+          </button>
+          <button type="button"
+                  class="w-1/2 bg-gray-500 text-white p-3 rounded-lg transition duration-300 hover:scale-105 hover:bg-gray-600"
+                  (click)="goBack()">
+            BACK
+          </button>
         </div>
       </div>
     </form>

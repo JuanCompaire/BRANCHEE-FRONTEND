@@ -3,38 +3,76 @@
 <head>
   <title>BRANCHEE</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
 </head>
 <body class="flex justify-center items-center min-h-screen bg-cover bg-center" style="background-image: url('../../../../assets/background_proyect_create.png');">
-  <div class="w-[600px] bg-white bg-opacity-20 backdrop-blur-md shadow-lg text-white rounded-lg p-8 font-mono">
+  <div class="w-full max-w-5xl bg-white bg-opacity-20 backdrop-blur-md shadow-lg text-white rounded-lg p-8 px-4 mt-8">
 
     <p class="text-3xl font-extrabold text-center mb-6">CREATE PROJECT</p>
 
     <form #form="ngForm" (ngSubmit)="createProyect()">
+      <!-- Project Name -->
       <div class="mb-4">
-        <input type="text" class="w-full p-2 border border-white bg-transparent rounded-lg text-white placeholder-gray-300" placeholder="PROJECT NAME" [(ngModel)]="proyect.name_proyect" name="proyectName" required #proyectName="ngModel">
+        <input type="text"
+               class="w-full p-2 border border-white bg-transparent rounded-lg text-white placeholder-gray-300"
+               placeholder="PROJECT NAME"
+               [(ngModel)]="proyect.name_proyect"
+               name="proyectName"
+               required
+               #proyectName="ngModel">
         <div *ngIf="proyectName.invalid && proyectName.touched" class="text-red-500 text-sm mt-1">Project name is required.</div>
       </div>
 
+      <!-- User Search -->
       <div class="mb-4">
-        <label class="block text-sm">Add User</label>
-        <input type="text" #userSearch class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300" placeholder="Search user" (keyup)="searchUser($event)" required>
-        <ul class="mt-2 bg-white bg-opacity-20 backdrop-blur-md rounded-lg overflow-y-auto max-h-40" [class.hidden]="userList.length === 0">
-          <li *ngFor="let user of userList" class="p-2 hover:bg-gray-600 cursor-pointer" (click)="addUser(user, userSearch)">{{ user.username }}</li>
+        <label class="block text-sm mb-2">ADD USER</label>
+        <input type="text"
+               #userSearch
+               class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300"
+               placeholder="SEARCH USER"
+               (keyup)="searchUser($event)"
+               required>
+        <ul class="mt-2 bg-white bg-opacity-20 backdrop-blur-md rounded-lg overflow-y-auto max-h-40"
+            [class.hidden]="userList.length === 0">
+          <li *ngFor="let user of userList"
+              class="p-2 hover:bg-gray-600 cursor-pointer"
+              (click)="addUser(user, userSearch)">
+            {{ user.username }}
+          </li>
         </ul>
       </div>
 
-      <label class="block text-sm mt-4" *ngIf="selectedUserIds.length != 0 ">USERS LIST</label>
-      <div class="flex flex-wrap gap-2">
-        <div *ngFor="let user of selectedUserIds" class="flex items-center bg-gray-700 p-2 rounded-lg">
-          <img src="assets/user_icon.webp" alt="User Icon" class="w-6 h-6 rounded-full">
-          <p class="ml-2">{{ user.username }}</p>
-          <i class="bi bi-trash3-fill text-red-500 cursor-pointer ml-2" (click)="removeUser(user.usuarioId)"></i>
+      <!-- Users List -->
+      <label class="block text-sm mb-2" *ngIf="selectedUserIds.length > 0">USERS LIST</label>
+      <div class="flex flex-wrap gap-4 mb-6">
+        <div *ngFor="let user of selectedUserIds"
+             class="flex items-center bg-gray-700 p-2 rounded-lg">
+          <img src="assets/user_icon.webp"
+               alt="User Icon"
+               class="w-8 h-8 rounded-full mr-2">
+          {{ user.username }}
+          <i class="bi bi-trash text-red-500 cursor-pointer"
+             (click)="removeUser(user.usuarioId)"></i>
         </div>
       </div>
 
-      <div class="mt-6">
-        <button type="submit" class="w-full bg-blue-500 p-2 rounded-lg mb-2 transition duration-300 hover:scale-105 hover:bg-blue-600" [disabled]="form.invalid">Create</button>
-        <button type="button" class="w-full bg-gray-500 p-2 rounded-lg transition duration-300 hover:scale-105 hover:bg-gray-600" (click)="goBack()">Back</button>
+      <!-- Buttons -->
+      <div class="flex justify-between">
+        <button type="submit"
+                class="w-1/2 bg-blue-500 text-white p-3 rounded-lg mr-2 transition duration-300 hover:scale-105 hover:bg-blue-600"
+                [disabled]="form.invalid">
+          Create
+        </button>
+        <button type="button"
+                class="w-1/2 bg-gray-500 text-white p-3 rounded-lg ml-2 transition duration-300 hover:scale-105 hover:bg-gray-600"
+                (click)="goBack()">
+          Back
+        </button>
       </div>
     </form>
   </div>
