@@ -87,7 +87,7 @@
         </div>
 
         <!-- BUTON SEE CHATS-->
-        <div class="flex flex-wrap gap-4 mt-2" *ngIf="!seeChats">
+        <div class="flex flex-wrap gap-4 mt-2" *ngIf="!seeChats && taskDetails.chats.length > 0">
           <div class="flex items-center bg-gray-700 p-2 rounded-lg text-white transition duration-300 hover:scale-105 hover:bg-indigo-500" (click)="seeAllChats()">
             CHATS
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 hover:scale-105 transition-transform">
@@ -97,7 +97,7 @@
         </div>
 
         <!-- BUTON SEE LESS CHATS-->
-        <div class="flex flex-wrap gap-4 mt-2" *ngIf="seeChats">
+        <div class="flex flex-wrap gap-4 mt-2" *ngIf="seeChats && taskDetails.chats.length > 0">
           <div class="flex items-center bg-gray-700 p-2 rounded-lg text-white transition duration-300 hover:scale-105 hover:bg-indigo-500" (click)="dontSeeAllChats()">
             CHATS
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
