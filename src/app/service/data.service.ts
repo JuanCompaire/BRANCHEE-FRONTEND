@@ -90,9 +90,14 @@ export class DataService {
     return this.http.post<any>(`${this.url}api/proyect/edit`,proyecto);
   }
 
-  //Get Proyects by user Id
+  //Get Proyects by user Id(this is for main page, to only get name and id info, so is faster and dont need all the info from all projects)
   getProyectosByUserId(id :number): Observable<Proyecto[]>{
     return this.http.get<Proyecto[]>(`${this.url}api/proyect/getProyectsByUserId`, { params: {id} });
+  }
+
+  //Get Proyects by user Id All Details (to get all the info about all the projects of an user)
+  getProyectosByUserIdAllDetails(id :number): Observable<Proyecto[]>{
+    return this.http.get<Proyecto[]>(`${this.url}api/proyect/getProyectosByUserIdAllDetails`, { params: {id} });
   }
 
   //Get Tasks by user Id

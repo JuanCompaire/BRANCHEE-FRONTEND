@@ -149,6 +149,11 @@ export class ProyectDetailsComponent implements OnInit {
     }
   }
 
+  toCreateTask(): void{
+    console.log("REDIRECT TO CREATE TASK PAGE");
+    this.router.navigateByUrl('create-task');
+  }
+
   goBack() {
     this.router.navigate(['main-page']);
   }

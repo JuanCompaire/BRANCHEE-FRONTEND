@@ -64,6 +64,7 @@ export class MainPageComponent implements OnInit {
     console.log("REDIRECT TO CREATE PROYECT PAGE");
     this.router.navigateByUrl('create-proyect');
   }
+
   toCreateTask(): void{
     console.log("REDIRECT TO CREATE TASK PAGE");
     this.router.navigateByUrl('create-task');
@@ -84,4 +85,13 @@ export class MainPageComponent implements OnInit {
       console.error('Error: ID es undefined o null');
     }
   }
+
+  toggleProjects() {
+    this.showProjects = !this.showProjects;
+  }
+
+  toAllProjectsPage(){
+    this.router.navigateByUrl('all-projects');
+  }
+
 }
