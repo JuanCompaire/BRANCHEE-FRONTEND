@@ -19,8 +19,7 @@ export class DetailsTaskComponent implements OnInit{
   user = new Usuario();
   user_created_task = new Usuario();
   user_assigned_task_list: Usuario[] = [];
-  status_options = ["OPEN","WORKING ON IT","CLOSED"];
-  import_options = ["LOW","MEDIUM","HIGH"];
+  status_options = ["OPEN","CLOSED","PRIORITY"];
   assignedUsers: { usuarioId: number; username: string; email: string }[] = [];
   // this is the list os users in the proyect, which they can see all the task in their project
   //so we load in an array and we recibe the id, and we give back the full user by searching it in this array

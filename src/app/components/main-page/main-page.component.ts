@@ -19,6 +19,7 @@ export class MainPageComponent implements OnInit {
   proyectList: Proyecto[] = [];
   taskList:Tarea[] = [];
   showProjects : boolean = false;
+  showTasks: boolean = false;
 
   constructor(
     private service: DataService, // Usa inyección a través del constructor
@@ -90,8 +91,16 @@ export class MainPageComponent implements OnInit {
     this.showProjects = !this.showProjects;
   }
 
+  toggleTasks(){
+    this.showTasks = ! this.showTasks;
+  }
+
   toAllProjectsPage(){
     this.router.navigateByUrl('all-projects');
+  }
+
+  toAllTasksPage(){
+    this.router.navigateByUrl('all-tasks');
   }
 
 }

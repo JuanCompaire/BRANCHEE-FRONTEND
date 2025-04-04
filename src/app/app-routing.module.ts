@@ -8,6 +8,7 @@ import { ProyectDetailsComponent } from './components/proyect/proyect-details/pr
 import { CreateTaskComponent } from './components/task/create-task/create-task.component';
 import { DetailsTaskComponent } from './components/task/details-task/details-task.component';
 import { AllProjectsComponent } from './components/proyect/all-projects/all-projects.component';
+import { AllTasksComponent } from './components/task/all-tasks/all-tasks.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'details-proyect/:id', component: ProyectDetailsComponent},
   { path: 'create-task', component: CreateTaskComponent },
   { path: 'details-task/:id', component: DetailsTaskComponent},
-  { path: 'all-projects', component: AllProjectsComponent}
+  { path: 'all-projects', component: AllProjectsComponent},
+  { path: 'all-tasks', component: AllTasksComponent}
 
 ];
 

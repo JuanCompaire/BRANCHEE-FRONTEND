@@ -16,6 +16,7 @@ import { CreateTaskComponent } from './components/task/create-task/create-task.c
 import { DetailsTaskComponent } from './components/task/details-task/details-task.component';
 import { LightboxComponent } from './lightbox/lightbox.component';
 import { AllProjectsComponent } from './components/proyect/all-projects/all-projects.component';
+import { AllTasksComponent } from './components/task/all-tasks/all-tasks.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AllProjectsComponent } from './components/proyect/all-projects/all-proj
     CreateTaskComponent,
     DetailsTaskComponent,
     LightboxComponent,
-    AllProjectsComponent
+    AllProjectsComponent,
+    AllTasksComponent
   ],
   imports: [
     BrowserModule,

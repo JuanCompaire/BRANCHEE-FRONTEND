@@ -21,7 +21,7 @@ export class CreateTaskComponent implements OnInit{
   isDropDownOpen = false;
   selectedFile: File | null = null;
   selectedProjectName: string = '';
-  status_options = ["WORKING ON IT","HIGH IMPORTANCE","CLOSED"];
+  status_options = ["OPEN","CLOSED","PRIORITY"];
   assignedUsers: { usuarioId: number; username: string; email: string }[] = [];
   assignedUsers_options: { usuarioId: number; username: string; email: string }[] = [];
 
