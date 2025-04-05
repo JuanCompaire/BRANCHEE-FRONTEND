@@ -1,3 +1,4 @@
+import { Tarea } from './../../../models/Tarea';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../../models/Usuario';
 import { Proyecto } from '../../../models/Proyecto';
@@ -16,6 +17,7 @@ export class AllProjectsComponent implements OnInit {
   proyectList: Proyecto[] = [];
   searchTerm: string = '';
   filteredProjects: any[] | null = null;
+  loading: boolean = true;
 
   constructor(
     private service: DataService, // Usa inyección a través del constructor
@@ -63,6 +65,27 @@ export class AllProjectsComponent implements OnInit {
     this.filteredProjects = this.proyectList.filter(project =>
       project.name_proyect.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+  getChatCountByStatus(chats: any[], status: string): number {
+    return chats.filter(chat => chat.status === status).length;
+  }
+
+  getOpenChatsCount(tasks: Tarea[]): number {
+    return tasks?.filter(task => task.estado === 'OPEN').length || 0;
+  }
+
+  getPriorityChatsCount(tasks: Tarea[]): number {
+    return tasks?.filter(task => task.estado === 'PRIORITY').length || 0;
+  }
+
+  getClosedChatsCount(tasks: Tarea[]): number {
+    return tasks?.filter(task => task.estado === 'CLOSED').length || 0;
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
+    this.filterProjects();
   }
 
   goBack(): void {
