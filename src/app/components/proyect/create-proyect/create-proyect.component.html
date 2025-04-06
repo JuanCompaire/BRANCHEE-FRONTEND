@@ -3,78 +3,137 @@
 <head>
   <title>BRANCHEE</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
     body {
       font-family: 'Poppins', sans-serif;
     }
+    .user-chip {
+      transition: all 0.2s ease;
+    }
+    .user-chip:hover {
+      transform: scale(1.05);
+      background-color: rgba(55, 65, 81, 0.7);
+    }
+    textarea {
+      background-color: rgba(31, 41, 55, 0.5);
+      border: 1px solid rgba(55, 65, 81, 0.7);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      color: white;
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: rgba(59, 130, 246, 0.8);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
   </style>
 </head>
-<body class="flex justify-center items-center min-h-screen bg-cover bg-center" style="background-image: url('../../../../assets/background_proyect_create.png');">
-  <div class="w-full max-w-5xl bg-white bg-opacity-20 backdrop-blur-md shadow-lg text-white rounded-lg p-8 px-4 mt-8">
+<body class="min-h-screen bg-slate-950 bg-cover bg-center p-4 md:p-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Go Back Button -->
+    <button (click)="goBack()" class="mb-6 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+      </svg>
+      Go Back
+    </button>
 
-    <p class="text-3xl font-extrabold text-center mb-6">CREATE PROJECT</p>
-
-    <form #form="ngForm" (ngSubmit)="createProyect()">
-      <!-- Project Name -->
-      <div class="mb-4">
-        <input type="text"
-               class="w-full p-2 border border-white bg-transparent rounded-lg text-white placeholder-gray-300"
-               placeholder="PROJECT NAME"
-               [(ngModel)]="proyect.name_proyect"
-               name="proyectName"
-               required
-               #proyectName="ngModel">
-        <div *ngIf="proyectName.invalid && proyectName.touched" class="text-red-500 text-sm mt-1">Project name is required.</div>
+    <!-- Create Project Card -->
+    <div class="p-6 bg-gray-800/80 rounded-xl backdrop-blur-md border border-gray-700 shadow-lg">
+      <!-- Title -->
+      <div class="flex flex-col items-center justify-center mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        <h1 class="text-3xl font-bold text-white tracking-wide text-center">Create a New Project</h1>
+        <p class="text-gray-400 text-sm text-center mt-1">Fill in the details below to get started</p>
       </div>
 
-      <!-- User Search -->
-      <div class="mb-4">
-        <label class="block text-sm mb-2">ADD USER</label>
-        <input type="text"
-               #userSearch
-               class="w-full bg-transparent border border-white rounded-lg p-2 text-white placeholder-gray-300"
-               placeholder="SEARCH USER"
-               (keyup)="searchUser($event)"
-               required>
-        <ul class="mt-2 bg-white bg-opacity-20 backdrop-blur-md rounded-lg overflow-y-auto max-h-40"
-            [class.hidden]="userList.length === 0">
-          <li *ngFor="let user of userList"
-              class="p-2 hover:bg-gray-600 cursor-pointer"
-              (click)="addUser(user, userSearch)">
-            {{ user.username }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- Users List -->
-      <label class="block text-sm mb-2" *ngIf="selectedUserIds.length > 0">USERS LIST</label>
-      <div class="flex flex-wrap gap-4 mb-6">
-        <div *ngFor="let user of selectedUserIds"
-             class="flex items-center bg-gray-700 p-2 rounded-lg">
-          <img src="assets/user_icon.webp"
-               alt="User Icon"
-               class="w-8 h-8 rounded-full mr-2">
-          {{ user.username }}
-          <i class="bi bi-trash text-red-500 cursor-pointer"
-             (click)="removeUser(user.usuarioId)"></i>
+      <form #form="ngForm" (ngSubmit)="createProyect()">
+        <!-- Project Name -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-400 mb-2">PROJECT NAME</label>
+          <input type="text"
+                 class="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 placeholder="Enter project name"
+                 [(ngModel)]="proyect.name_proyect"
+                 name="proyectName"
+                 required
+                 #proyectName="ngModel">
+          <div *ngIf="proyectName.invalid && proyectName.touched" class="text-red-400 text-sm mt-1">Project name is required.</div>
         </div>
-      </div>
 
-      <!-- Buttons -->
-      <div class="flex justify-between">
-        <button type="submit"
-                class="w-1/2 bg-blue-500 text-white p-3 rounded-lg mr-2 transition duration-300 hover:scale-105 hover:bg-blue-600"
-                [disabled]="form.invalid">
-          Create
-        </button>
-        <button type="button"
-                class="w-1/2 bg-gray-500 text-white p-3 rounded-lg ml-2 transition duration-300 hover:scale-105 hover:bg-gray-600"
-                (click)="goBack()">
-          Back
-        </button>
-      </div>
-    </form>
+        <!-- User Search -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-400 mb-2">ADD TEAM MEMBERS</label>
+          <div class="relative">
+            <input type="text"
+                   #userSearch
+                   class="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                   placeholder="Search users..."
+                   (keyup)="searchUser($event)"
+                   required>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute right-3 top-3.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+            </svg>
+          </div>
+
+          <ul class="mt-2 bg-gray-700/80 rounded-lg overflow-y-auto max-h-40 shadow-lg border border-gray-600"
+              [class.hidden]="userList.length === 0">
+            <li *ngFor="let user of userList"
+                class="p-3 hover:bg-gray-600 cursor-pointer flex items-center"
+                (click)="addUser(user, userSearch)">
+              <img src="assets/user_icon.webp" alt="User Icon" class="w-8 h-8 rounded-full mr-3 border border-gray-500">
+              <div>
+                <p class="text-white font-medium">{{ user.username }}</p>
+                <p class="text-xs text-gray-400">EMAIL: {{ user.email }}</p>
+                <p class="text-xs text-gray-400">ID: {{ user.usuarioId }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Selected Users -->
+        <div class="mb-6" *ngIf="selectedUserIds.length > 0">
+          <label class="block text-sm font-medium text-gray-400 mb-2">TEAM MEMBERS ({{selectedUserIds.length}})</label>
+          <div class="flex flex-wrap gap-3">
+            <div *ngFor="let user of selectedUserIds"
+                 class="user-chip flex items-center bg-gray-700/70 px-4 py-2 rounded-full border border-gray-600">
+              <img src="assets/user_icon.webp" alt="User Icon" class="w-6 h-6 rounded-full mr-2">
+              <span class="text-white text-sm">{{ user.username }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 text-red-400 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" (click)="removeUser(user.usuarioId)">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Description -->
+        <div class="mb-10">
+          <label class="block text-sm font-medium text-gray-400 mb-2">PROJECT DESCRIPTION</label>
+          <textarea [(ngModel)]="proyect.description"
+                    name="description"
+                    placeholder="Describe your project..."></textarea>
+        </div>
+
+        <!-- Main Button -->
+        <div class="flex justify-center">
+          <button type="submit"
+                  class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl transition-all shadow-lg"
+                  [disabled]="form.invalid">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Create Project
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </body>
 </html>
