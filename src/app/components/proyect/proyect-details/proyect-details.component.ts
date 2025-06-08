@@ -24,15 +24,19 @@ export class ProyectDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private service: DataService, private router: Router) {}
 
   ngOnInit(): void {
-    this.proyectId = +this.route.snapshot.paramMap.get('id')!;
-    this.loadProjectDetails();
-    this.service.getCurrentUser().subscribe({
-      next: (user: Usuario) => {
-        this.user = user;
-        // Ya no llamamos a checkIfBoss aquí
-      }
-    });
-  }
+  this.service.getCurrentUser().subscribe({
+    next: (user: Usuario) => {
+      this.user = user;
+      console.log("Usuario cargado correctamente: ", this.user);
+      this.proyectId = +this.route.snapshot.paramMap.get('id')!;
+      this.loadProjectDetails();
+    },
+    error: (error) => {
+      console.error('Error al obtener el usuario actual:', error);
+    }
+  });
+}
+
 
   loadProjectDetails() {
     this.service.getProyectoById(this.proyectId).subscribe({

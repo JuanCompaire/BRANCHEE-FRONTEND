@@ -62,7 +62,7 @@
       <!-- Project Description Textarea -->
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-300 mb-2">PROJECT DESCRIPTION</label>
-        <textarea class="textarea-style"
+        <textarea class="textarea-style" [contentEditable]="false"
                   [(ngModel)]="proyect_details.description"
                   placeholder="Add a project description..."></textarea>
       </div>
@@ -131,8 +131,9 @@
     </div>
 
     <!-- Tasks List -->
-    <div class="glass-card rounded-xl p-6 mb-6" *ngIf="proyect_details.tareas.length > 0">
+    <div class="glass-card rounded-xl p-6 mb-6" >
       <label class="block text-sm font-medium text-gray-300 mb-3">TASKS LIST ({{proyect_details.tareas.length}})</label>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div *ngFor="let task of proyect_details.tareas"
              class="p-4 rounded-lg border task-border cursor-pointer hover:bg-gray-700/30 transition-colors"
@@ -142,17 +143,17 @@
           <p class="text-xs text-gray-300 mt-1">{{ task.estado }}</p>
         </div>
       </div>
+      <button type="button"
+                class="px-6 py-2 mt-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center"
+                (click)="toCreateTask()">
+          CREATE TASK
+      </button>
     </div>
 
     <!-- Buttons Section -->
     <div class="space-y-4">
       <!-- Non-Boss Buttons -->
       <div *ngIf="!userIsBoss" class="flex gap-4">
-        <button type="button"
-                class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                (click)="editProyect()">
-          SAVE
-        </button>
         <button type="button"
                 class="flex-1 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
                 (click)="goBack()">
