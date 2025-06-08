@@ -35,11 +35,6 @@
       Go Back
     </button>
 
-    <!-- Loading State -->
-    <div *ngIf="loading && !proyectList.length" class="text-center py-20">
-      <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-      <p class="text-white">Loading projects...</p>
-    </div>
 
     <!-- FILTERS SECTION -->
     <div class="mb-8 p-5 bg-white/5 rounded-xl backdrop-blur-md border border-gray-800">
@@ -168,7 +163,7 @@
     </div>
 
     <!-- EMPTY STATE -->
-    <div *ngIf="!loading && ((filteredProjects?.length === 0 && searchTerm) || (proyectList.length === 0 && !searchTerm))" class="text-center py-16">
+    <div *ngIf="(filteredProjects?.length === 0 && searchTerm) || (proyectList.length === 0 && !searchTerm)" class="text-center py-16">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
@@ -179,10 +174,7 @@
         {{ searchTerm ? 'Try a different search term' : 'Create your first project to get started' }}
       </p>
       <div class="flex justify-center gap-4">
-        <button (click)="clearSearch()"
-                class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors flex items-center">
-          Clear Search
-        </button>
+
         <button *ngIf="!searchTerm"
                 class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                 (click)="toCreateProyect()">
